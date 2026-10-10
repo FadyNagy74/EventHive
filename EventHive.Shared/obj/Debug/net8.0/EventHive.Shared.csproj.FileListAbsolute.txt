@@ -1,0 +1,11 @@
+D:\.NET Projects\Microservices EventHive\EventHive\EventHive.Shared\bin\Debug\net8.0\EventHive.Shared.deps.json
+D:\.NET Projects\Microservices EventHive\EventHive\EventHive.Shared\bin\Debug\net8.0\EventHive.Shared.dll
+D:\.NET Projects\Microservices EventHive\EventHive\EventHive.Shared\bin\Debug\net8.0\EventHive.Shared.pdb
+D:\.NET Projects\Microservices EventHive\EventHive\EventHive.Shared\obj\Debug\net8.0\EventHive.Shared.GeneratedMSBuildEditorConfig.editorconfig
+D:\.NET Projects\Microservices EventHive\EventHive\EventHive.Shared\obj\Debug\net8.0\EventHive.Shared.AssemblyInfoInputs.cache
+D:\.NET Projects\Microservices EventHive\EventHive\EventHive.Shared\obj\Debug\net8.0\EventHive.Shared.AssemblyInfo.cs
+D:\.NET Projects\Microservices EventHive\EventHive\EventHive.Shared\obj\Debug\net8.0\EventHive.Shared.csproj.CoreCompileInputs.cache
+D:\.NET Projects\Microservices EventHive\EventHive\EventHive.Shared\obj\Debug\net8.0\EventHive.Shared.dll
+D:\.NET Projects\Microservices EventHive\EventHive\EventHive.Shared\obj\Debug\net8.0\refint\EventHive.Shared.dll
+D:\.NET Projects\Microservices EventHive\EventHive\EventHive.Shared\obj\Debug\net8.0\EventHive.Shared.pdb
+D:\.NET Projects\Microservices EventHive\EventHive\EventHive.Shared\obj\Debug\net8.0\ref\EventHive.Shared.dll

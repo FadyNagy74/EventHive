@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>8b10ccc4-2b2f-45ec-acac-600f7a977cc3</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Consul" Version="1.7.14.4" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
+  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\EventHive.Shared\EventHive.Shared.csproj" />
+	</ItemGroup>
+
+</Project>

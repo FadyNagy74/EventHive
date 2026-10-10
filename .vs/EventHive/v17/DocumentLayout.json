@@ -1,0 +1,163 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CE0B89B9-D2B0-4CEB-B138-EEC714FBAB91}|BookingService\\BookingService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\bookingservice\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CE0B89B9-D2B0-4CEB-B138-EEC714FBAB91}|BookingService\\BookingService.csproj|solutionrelative:bookingservice\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\DELL\\AppData\\Roaming\\Microsoft\\UserSecrets\\54f92eca-aa18-469a-9af9-05c82c533704\\secrets.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\authenticationservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|solutionrelative:authenticationservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\authenticationservice\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|solutionrelative:authenticationservice\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{799BAC3B-6E5C-4EA4-97DD-370F9142DFAC}|ApiGateway\\ApiGateway.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\apigateway\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{799BAC3B-6E5C-4EA4-97DD-370F9142DFAC}|ApiGateway\\ApiGateway.csproj|solutionrelative:apigateway\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\authenticationservice\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|solutionrelative:authenticationservice\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 11,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:134:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:135:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:136:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:137:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:138:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:139:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:140:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:133:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BookingController.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\BookingService\\Controllers\\BookingController.cs",
+              "RelativeDocumentMoniker": "BookingService\\Controllers\\BookingController.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\BookingService\\Controllers\\BookingController.cs",
+              "RelativeToolTip": "BookingService\\Controllers\\BookingController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-20T14:47:26.959Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "secrets.json",
+              "DocumentMoniker": "C:\\Users\\DELL\\AppData\\Roaming\\Microsoft\\UserSecrets\\54f92eca-aa18-469a-9af9-05c82c533704\\secrets.json",
+              "ToolTip": "C:\\Users\\DELL\\AppData\\Roaming\\Microsoft\\UserSecrets\\54f92eca-aa18-469a-9af9-05c82c533704\\secrets.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-09-20T14:14:42.443Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\ApiGateway\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "ApiGateway\\Properties\\launchSettings.json",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\ApiGateway\\Properties\\launchSettings.json",
+              "RelativeToolTip": "ApiGateway\\Properties\\launchSettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-09-20T14:08:21.561Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "AuthenticationService\\Properties\\launchSettings.json",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Properties\\launchSettings.json",
+              "RelativeToolTip": "AuthenticationService\\Properties\\launchSettings.json",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAB0AAAAHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-09-20T13:48:15.867Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AuthenticationController.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Controllers\\AuthenticationController.cs",
+              "RelativeDocumentMoniker": "AuthenticationService\\Controllers\\AuthenticationController.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Controllers\\AuthenticationController.cs",
+              "RelativeToolTip": "AuthenticationService\\Controllers\\AuthenticationController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-20T12:26:01.241Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Program.cs",
+              "RelativeDocumentMoniker": "AuthenticationService\\Program.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Program.cs",
+              "RelativeToolTip": "AuthenticationService\\Program.cs",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAAADEAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-20T11:43:01.254Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

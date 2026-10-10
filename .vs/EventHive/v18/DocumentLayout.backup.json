@@ -1,0 +1,632 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\catalogservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|solutionrelative:catalogservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\catalogservice\\services\\eventservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|solutionrelative:catalogservice\\services\\eventservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\DELL\\AppData\\Roaming\\Microsoft\\UserSecrets\\54f92eca-aa18-469a-9af9-05c82c533704\\secrets.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E4C8029D-CFB6-4B40-B0AC-9B5C327D9CBC}|EventHive.Shared\\EventHive.Shared.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\eventhive.shared\\messagebroker\\events.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E4C8029D-CFB6-4B40-B0AC-9B5C327D9CBC}|EventHive.Shared\\EventHive.Shared.csproj|solutionrelative:eventhive.shared\\messagebroker\\events.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\catalogservice\\catalogservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|solutionrelative:catalogservice\\catalogservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\catalogservice\\domain\\repositories\\ieventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|solutionrelative:catalogservice\\domain\\repositories\\ieventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\catalogservice\\domain\\repositories\\eventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|solutionrelative:catalogservice\\domain\\repositories\\eventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\catalogservice\\infrastructure\\persistence\\catalogdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|solutionrelative:catalogservice\\infrastructure\\persistence\\catalogdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\catalogservice\\infrastructure\\persistence\\migrations\\20261005112934_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|solutionrelative:catalogservice\\infrastructure\\persistence\\migrations\\20261005112934_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\catalogservice\\controllers\\catalogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|solutionrelative:catalogservice\\controllers\\catalogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\catalogservice\\dtos\\createeventdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|solutionrelative:catalogservice\\dtos\\createeventdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\authenticationservice\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|solutionrelative:authenticationservice\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Infrastructure\\Persistence\\Migrations\\20261007150254_EventUniquenessConstraint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CatalogService\\Infrastructure\\Persistence\\Migrations\\20261007150254_EventUniquenessConstraint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\authenticationservice\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|solutionrelative:authenticationservice\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\catalogservice\\dtos\\updateeventdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|solutionrelative:catalogservice\\dtos\\updateeventdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\catalogservice\\dtos\\adjustcapacitydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|solutionrelative:catalogservice\\dtos\\adjustcapacitydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\catalogservice\\dtos\\publishedeventdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|solutionrelative:catalogservice\\dtos\\publishedeventdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\catalogservice\\services\\ieventservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|solutionrelative:catalogservice\\services\\ieventservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\catalogservice\\domain\\entities\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|solutionrelative:catalogservice\\domain\\entities\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E4C8029D-CFB6-4B40-B0AC-9B5C327D9CBC}|EventHive.Shared\\EventHive.Shared.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\eventhive.shared\\common\\error.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E4C8029D-CFB6-4B40-B0AC-9B5C327D9CBC}|EventHive.Shared\\EventHive.Shared.csproj|solutionrelative:eventhive.shared\\common\\error.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E4C8029D-CFB6-4B40-B0AC-9B5C327D9CBC}|EventHive.Shared\\EventHive.Shared.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\eventhive.shared\\common\\result.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E4C8029D-CFB6-4B40-B0AC-9B5C327D9CBC}|EventHive.Shared\\EventHive.Shared.csproj|solutionrelative:eventhive.shared\\common\\result.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\authenticationservice\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|solutionrelative:authenticationservice\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\authenticationservice\\migrations\\20260918121451_initialcreate.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|solutionrelative:authenticationservice\\migrations\\20260918121451_initialcreate.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\authenticationservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|solutionrelative:authenticationservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\authenticationservice\\infrastructure\\persistence\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|solutionrelative:authenticationservice\\infrastructure\\persistence\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\authenticationservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|solutionrelative:authenticationservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\catalogservice\\domain\\entities\\manualcapacityadjustment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|solutionrelative:catalogservice\\domain\\entities\\manualcapacityadjustment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\authenticationservice\\infrastructure\\repositories\\refreshtokenrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|solutionrelative:authenticationservice\\infrastructure\\repositories\\refreshtokenrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\authenticationservice\\authenticationservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|solutionrelative:authenticationservice\\authenticationservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\catalogservice\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{4889F6BE-730F-4AA5-849C-E2CB2AD562FB}|CatalogService\\CatalogService.csproj|solutionrelative:catalogservice\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\authenticationservice\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|solutionrelative:authenticationservice\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\authenticationservice\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{4FF5CAEC-69F8-4CA8-8703-C35D004E1873}|AuthenticationService\\AuthenticationService.csproj|solutionrelative:authenticationservice\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{799BAC3B-6E5C-4EA4-97DD-370F9142DFAC}|ApiGateway\\ApiGateway.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\apigateway\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{799BAC3B-6E5C-4EA4-97DD-370F9142DFAC}|ApiGateway\\ApiGateway.csproj|solutionrelative:apigateway\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CE0B89B9-D2B0-4CEB-B138-EEC714FBAB91}|BookingService\\BookingService.csproj|d:\\.net projects\\microservices eventhive\\eventhive\\bookingservice\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CE0B89B9-D2B0-4CEB-B138-EEC714FBAB91}|BookingService\\BookingService.csproj|solutionrelative:bookingservice\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 17,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:134:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:135:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:136:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:137:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:138:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:139:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:140:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:133:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Events.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\EventHive.Shared\\MessageBroker\\Events.cs",
+              "RelativeDocumentMoniker": "EventHive.Shared\\MessageBroker\\Events.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\EventHive.Shared\\MessageBroker\\Events.cs",
+              "RelativeToolTip": "EventHive.Shared\\MessageBroker\\Events.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-10T13:21:18.918Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "EventService.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Services\\EventService.cs",
+              "RelativeDocumentMoniker": "CatalogService\\Services\\EventService.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Services\\EventService.cs",
+              "RelativeToolTip": "CatalogService\\Services\\EventService.cs",
+              "ViewState": "AgIAAHAAAAAAAAAAAAAUwHEAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T12:12:19.823Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "EventRepository.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Domain\\Repositories\\EventRepository.cs",
+              "RelativeDocumentMoniker": "CatalogService\\Domain\\Repositories\\EventRepository.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Domain\\Repositories\\EventRepository.cs",
+              "RelativeToolTip": "CatalogService\\Domain\\Repositories\\EventRepository.cs",
+              "ViewState": "AgIAAHMAAAAAAAAAAAAzwH4AAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T11:40:08.232Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IEventRepository.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Domain\\Repositories\\IEventRepository.cs",
+              "RelativeDocumentMoniker": "CatalogService\\Domain\\Repositories\\IEventRepository.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Domain\\Repositories\\IEventRepository.cs",
+              "RelativeToolTip": "CatalogService\\Domain\\Repositories\\IEventRepository.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAgAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T11:39:51.907Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "CatalogDbContext.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Infrastructure\\Persistence\\CatalogDbContext.cs",
+              "RelativeDocumentMoniker": "CatalogService\\Infrastructure\\Persistence\\CatalogDbContext.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Infrastructure\\Persistence\\CatalogDbContext.cs",
+              "RelativeToolTip": "CatalogService\\Infrastructure\\Persistence\\CatalogDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADIAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T10:57:30.114Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "secrets.json",
+              "DocumentMoniker": "C:\\Users\\DELL\\AppData\\Roaming\\Microsoft\\UserSecrets\\54f92eca-aa18-469a-9af9-05c82c533704\\secrets.json",
+              "ToolTip": "C:\\Users\\DELL\\AppData\\Roaming\\Microsoft\\UserSecrets\\54f92eca-aa18-469a-9af9-05c82c533704\\secrets.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-09-27T16:21:25.236Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Program.cs",
+              "RelativeDocumentMoniker": "CatalogService\\Program.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Program.cs",
+              "RelativeToolTip": "CatalogService\\Program.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T11:03:26.954Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "20261005112934_InitialCreate.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Infrastructure\\Persistence\\Migrations\\20261005112934_InitialCreate.cs",
+              "RelativeDocumentMoniker": "CatalogService\\Infrastructure\\Persistence\\Migrations\\20261005112934_InitialCreate.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Infrastructure\\Persistence\\Migrations\\20261005112934_InitialCreate.cs",
+              "RelativeToolTip": "CatalogService\\Infrastructure\\Persistence\\Migrations\\20261005112934_InitialCreate.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAYwDIAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T12:00:03.496Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CatalogService.csproj",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\CatalogService.csproj",
+              "RelativeDocumentMoniker": "CatalogService\\CatalogService.csproj",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\CatalogService.csproj",
+              "RelativeToolTip": "CatalogService\\CatalogService.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwCMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-10-05T11:21:25.556Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "CatalogController.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Controllers\\CatalogController.cs",
+              "RelativeDocumentMoniker": "CatalogService\\Controllers\\CatalogController.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Controllers\\CatalogController.cs",
+              "RelativeToolTip": "CatalogService\\Controllers\\CatalogController.cs",
+              "ViewState": "AgIAAGoAAAAAAAAAAADwv14AAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T11:35:40.782Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "CreateEventDto.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\DTOs\\CreateEventDto.cs",
+              "RelativeDocumentMoniker": "CatalogService\\DTOs\\CreateEventDto.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\DTOs\\CreateEventDto.cs",
+              "RelativeToolTip": "CatalogService\\DTOs\\CreateEventDto.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwBwAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-06T13:18:58.98Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "AuthenticationService\\Services\\AuthService.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Services\\AuthService.cs",
+              "RelativeToolTip": "AuthenticationService\\Services\\AuthService.cs",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAYwGgAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-07T14:15:01.846Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "20261007150254_EventUniquenessConstraint.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Infrastructure\\Persistence\\Migrations\\20261007150254_EventUniquenessConstraint.cs",
+              "RelativeDocumentMoniker": "CatalogService\\Infrastructure\\Persistence\\Migrations\\20261007150254_EventUniquenessConstraint.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Infrastructure\\Persistence\\Migrations\\20261007150254_EventUniquenessConstraint.cs",
+              "RelativeToolTip": "CatalogService\\Infrastructure\\Persistence\\Migrations\\20261007150254_EventUniquenessConstraint.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-07T15:02:54.413Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "AuthenticationController.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Controllers\\AuthenticationController.cs",
+              "RelativeDocumentMoniker": "AuthenticationService\\Controllers\\AuthenticationController.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Controllers\\AuthenticationController.cs",
+              "RelativeToolTip": "AuthenticationService\\Controllers\\AuthenticationController.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAswDoAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-27T16:21:25.243Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "UpdateEventDto.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\DTOs\\UpdateEventDto.cs",
+              "RelativeDocumentMoniker": "CatalogService\\DTOs\\UpdateEventDto.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\DTOs\\UpdateEventDto.cs",
+              "RelativeToolTip": "CatalogService\\DTOs\\UpdateEventDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-06T15:32:39.013Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "AdjustCapacityDto.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\DTOs\\AdjustCapacityDto.cs",
+              "RelativeDocumentMoniker": "CatalogService\\DTOs\\AdjustCapacityDto.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\DTOs\\AdjustCapacityDto.cs",
+              "RelativeToolTip": "CatalogService\\DTOs\\AdjustCapacityDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-06T15:14:47.928Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "PublishedEventDto.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\DTOs\\PublishedEventDto.cs",
+              "RelativeDocumentMoniker": "CatalogService\\DTOs\\PublishedEventDto.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\DTOs\\PublishedEventDto.cs",
+              "RelativeToolTip": "CatalogService\\DTOs\\PublishedEventDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T12:05:11.403Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "IEventService.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Services\\IEventService.cs",
+              "RelativeDocumentMoniker": "CatalogService\\Services\\IEventService.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Services\\IEventService.cs",
+              "RelativeToolTip": "CatalogService\\Services\\IEventService.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAkwBEAAABdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T13:55:37.006Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Event.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Domain\\Entities\\Event.cs",
+              "RelativeDocumentMoniker": "CatalogService\\Domain\\Entities\\Event.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Domain\\Entities\\Event.cs",
+              "RelativeToolTip": "CatalogService\\Domain\\Entities\\Event.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAgAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T11:19:40.865Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Error.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\EventHive.Shared\\Common\\Error.cs",
+              "RelativeDocumentMoniker": "EventHive.Shared\\Common\\Error.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\EventHive.Shared\\Common\\Error.cs",
+              "RelativeToolTip": "EventHive.Shared\\Common\\Error.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-06T12:59:46.225Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "20260918121451_InitialCreate.Designer.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Migrations\\20260918121451_InitialCreate.Designer.cs",
+              "RelativeDocumentMoniker": "AuthenticationService\\Migrations\\20260918121451_InitialCreate.Designer.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Migrations\\20260918121451_InitialCreate.Designer.cs",
+              "RelativeToolTip": "AuthenticationService\\Migrations\\20260918121451_InitialCreate.Designer.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAIAwwA0AAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-06T12:44:27Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Result.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\EventHive.Shared\\Common\\Result.cs",
+              "RelativeDocumentMoniker": "EventHive.Shared\\Common\\Result.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\EventHive.Shared\\Common\\Result.cs",
+              "RelativeToolTip": "EventHive.Shared\\Common\\Result.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAA6wAoAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-06T12:30:02.139Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "ApplicationDbContextModelSnapshot.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "AuthenticationService\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeToolTip": "AuthenticationService\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAIAwwAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-06T12:44:46.343Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Program.cs",
+              "RelativeDocumentMoniker": "AuthenticationService\\Program.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Program.cs",
+              "RelativeToolTip": "AuthenticationService\\Program.cs",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAwwGUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-27T16:21:25.244Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Infrastructure\\Persistence\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "AuthenticationService\\Infrastructure\\Persistence\\ApplicationDbContext.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Infrastructure\\Persistence\\ApplicationDbContext.cs",
+              "RelativeToolTip": "AuthenticationService\\Infrastructure\\Persistence\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAQwAcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T10:59:51.537Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\appsettings.json",
+              "RelativeDocumentMoniker": "AuthenticationService\\appsettings.json",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\appsettings.json",
+              "RelativeToolTip": "AuthenticationService\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-10-05T11:03:57.237Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "RefreshTokenRepository.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Infrastructure\\Repositories\\RefreshTokenRepository.cs",
+              "RelativeDocumentMoniker": "AuthenticationService\\Infrastructure\\Repositories\\RefreshTokenRepository.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Infrastructure\\Repositories\\RefreshTokenRepository.cs",
+              "RelativeToolTip": "AuthenticationService\\Infrastructure\\Repositories\\RefreshTokenRepository.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T11:40:39.564Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "ManualCapacityAdjustment.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Domain\\Entities\\ManualCapacityAdjustment.cs",
+              "RelativeDocumentMoniker": "CatalogService\\Domain\\Entities\\ManualCapacityAdjustment.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\Domain\\Entities\\ManualCapacityAdjustment.cs",
+              "RelativeToolTip": "CatalogService\\Domain\\Entities\\ManualCapacityAdjustment.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T11:19:46.53Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "CatalogService\\appsettings.Development.json",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\CatalogService\\appsettings.Development.json",
+              "RelativeToolTip": "CatalogService\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-10-05T11:04:26.404Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "AuthenticationService.csproj",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\AuthenticationService.csproj",
+              "RelativeDocumentMoniker": "AuthenticationService\\AuthenticationService.csproj",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\AuthenticationService.csproj",
+              "RelativeToolTip": "AuthenticationService\\AuthenticationService.csproj",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAuwA4AAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-10-05T10:57:49.931Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "AuthenticationService\\appsettings.Development.json",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\appsettings.Development.json",
+              "RelativeToolTip": "AuthenticationService\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-10-05T11:04:05.11Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\ApiGateway\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "ApiGateway\\Properties\\launchSettings.json",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\ApiGateway\\Properties\\launchSettings.json",
+              "RelativeToolTip": "ApiGateway\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-09-27T16:21:25.239Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "BookingController.cs",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\BookingService\\Controllers\\BookingController.cs",
+              "RelativeDocumentMoniker": "BookingService\\Controllers\\BookingController.cs",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\BookingService\\Controllers\\BookingController.cs",
+              "RelativeToolTip": "BookingService\\Controllers\\BookingController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-27T16:21:25.149Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "AuthenticationService\\Properties\\launchSettings.json",
+              "ToolTip": "D:\\.NET Projects\\Microservices EventHive\\EventHive\\AuthenticationService\\Properties\\launchSettings.json",
+              "RelativeToolTip": "AuthenticationService\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAB0AAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-09-27T16:21:25.241Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
