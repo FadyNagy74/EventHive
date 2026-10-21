@@ -29,7 +29,9 @@ namespace CatalogService.Infrastructure.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -65,7 +67,11 @@ namespace CatalogService.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Events", (string)null);
+                    b.HasIndex("Name", "Venue", "Date")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Events_Name_Venue_Date");
+
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("CatalogService.Domain.Entities.ManualCapacityAdjustment", b =>
@@ -100,7 +106,7 @@ namespace CatalogService.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("ManualCapacityAdjustments", (string)null);
+                    b.ToTable("ManualCapacityAdjustments");
                 });
 
             modelBuilder.Entity("CatalogService.Domain.Entities.ManualCapacityAdjustment", b =>

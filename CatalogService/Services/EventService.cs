@@ -1,7 +1,8 @@
 using CatalogService.Domain.Entities;
 using CatalogService.Domain.Enums;
-using CatalogService.Domain.Repositories;
-using CatalogService.DTOs;
+using CatalogService.Infrastructure.Repositories;
+using CatalogService.Services.DTOs.Requests;
+using CatalogService.Services.DTOs.Responses;
 using EventHive.Shared.Common;
 using EventHive.Shared.MessageBroker;
 using MassTransit;
@@ -44,32 +45,21 @@ namespace CatalogService.Services
             return Result<PublishedEventDto>.Success(publishedEvent);
         }
 
-        public async Task<Result<EventAvailabilityDto>> AvailableSeats(Guid id)
-        {
-            PublishedEventDto? publishedEvent = await _eventRepository.GetPublishedEventById(id);
 
-            if (publishedEvent == null)
-            {
-                return Result<EventAvailabilityDto>.Failure(Error.NotFound("Event not found"));
-            }
-
-            var isAvailable = publishedEvent.RemainingSeats > 0;
-            return Result<EventAvailabilityDto>.Success(new EventAvailabilityDto(isAvailable, publishedEvent.RemainingSeats));
-        }
-
-        public async Task<Result<string>> ReserveSeatsAsync(Guid id, int quantity)
+        public async Task<Result<ReserveSeatsResponseDto>> ReserveSeatsAsync(Guid id, int quantity)
         {
             if (quantity <= 0)
-                return Result<string>.Failure(Error.Validation("Quantity must be greater than zero."));
+                return Result<ReserveSeatsResponseDto>.Failure(Error.Validation("Quantity must be greater than zero."));
 
-            var success = await _eventRepository.ReserveSeatsAsync(id, quantity);
+            var (success, unitPrice) = await _eventRepository.ReserveSeatsAsync(id, quantity);
             
             if (!success)
             {
-                return Result<string>.Failure(Error.Conflict("Failed to reserve seats. Either the event does not exist, is not published, or there are not enough remaining seats."));
+                return Result<ReserveSeatsResponseDto>.Failure(Error.Conflict("Failed to reserve seats. Either the event does not exist, is not published, or there are not enough remaining seats."));
             }
 
-            return Result<string>.Success("Seats reserved successfully");
+            var totalPrice = unitPrice * quantity;
+            return Result<ReserveSeatsResponseDto>.Success(new ReserveSeatsResponseDto(unitPrice, totalPrice));
         }
 
         public async Task<Result<string>> ReleaseSeatsAsync(Guid id, int quantity)
@@ -110,7 +100,6 @@ namespace CatalogService.Services
 
             Domain.Entities.Event newEvent = new Domain.Entities.Event
             {
-                Id = Guid.NewGuid(),
                 Name = dto.Name,
                 Description = dto.Description,
                 Date = dto.Date.Value,
@@ -119,7 +108,6 @@ namespace CatalogService.Services
                 TotalCapacity = dto.TotalCapacity.Value,
                 RemainingSeats = dto.RemainingSeats.Value,
                 Status = EventStatus.Draft,
-                CreatedAt = DateTime.UtcNow
             };
 
             await _eventRepository.CreateEventAsync(newEvent);
@@ -252,13 +240,11 @@ namespace CatalogService.Services
 
             ManualCapacityAdjustment adjustment = new ManualCapacityAdjustment
             {
-                Id = Guid.NewGuid(),
                 EventId = ev.Id,
                 ChangeDelta = dto.RemainingSeats.Value - oldRemainingSeats,
                 Reason = dto.Reason,
                 AdjustedBy = name,
                 AdjustedById = Guid.Parse(userId),
-                CreatedAt = DateTime.UtcNow
             };
 
             await _eventRepository.AddManualAdjustmentForEvent(adjustment);

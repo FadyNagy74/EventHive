@@ -1,7 +1,8 @@
 using AuthenticationService.Domain.Entities;
 using EventHive.Shared.Extensions;
 using AuthenticationService.Services;
-using AuthenticationService.Services.DTOs;
+using AuthenticationService.Services.DTOs.Requests;
+using AuthenticationService.Services.DTOs.Responses;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;

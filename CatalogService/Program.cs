@@ -1,6 +1,6 @@
-using CatalogService.Domain.Repositories;
 using CatalogService.Infrastructure.Consul;
 using CatalogService.Infrastructure.Persistence;
+using CatalogService.Infrastructure.Repositories;
 using CatalogService.Services;
 using Consul;
 using EventHive.Shared.Exceptions;

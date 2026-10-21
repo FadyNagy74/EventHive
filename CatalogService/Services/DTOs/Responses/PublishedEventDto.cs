@@ -1,4 +1,4 @@
-﻿namespace CatalogService.DTOs
+namespace CatalogService.Services.DTOs.Responses
 {
     public record PublishedEventDto(
         string Name,

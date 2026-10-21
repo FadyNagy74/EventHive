@@ -4,7 +4,7 @@ namespace CatalogService.Domain.Entities;
 
 public class Event
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public DateTime Date { get; set; }
@@ -13,7 +13,7 @@ public class Event
     public int TotalCapacity { get; set; }
     public int RemainingSeats { get; set; }
     public EventStatus Status { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public ICollection<ManualCapacityAdjustment> CapacityAdjustments { get; set; } = new List<ManualCapacityAdjustment>();
 }

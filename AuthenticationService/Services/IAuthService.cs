@@ -1,4 +1,4 @@
-using AuthenticationService.Services.DTOs;
+using AuthenticationService.Services.DTOs.Responses;
 using EventHive.Shared.Common;
 using Microsoft.AspNetCore.Identity;
 

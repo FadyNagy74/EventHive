@@ -39,6 +39,10 @@ namespace CatalogService.Infrastructure.Persistence
                     .HasConversion<string>()
                     .HasMaxLength(50);
 
+                builder.Property(e => e.CreatedAt)
+                .IsRequired()
+                .HasDefaultValueSql("GETUTCDATE()");
+
                 builder.HasMany(e => e.CapacityAdjustments)
                     .WithOne(a => a.Event)
                     .HasForeignKey(a => a.EventId)

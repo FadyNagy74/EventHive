@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace CatalogService.DTOs
+namespace CatalogService.Services.DTOs.Requests
 {
     public record UpdateEventDto
     (

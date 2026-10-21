@@ -1,4 +1,4 @@
-namespace AuthenticationService.Services.DTOs;
+namespace AuthenticationService.Services.DTOs.Responses;
 
 public sealed record Profile(
     string Id,

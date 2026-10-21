@@ -1,6 +1,16 @@
-using Consul;
+using BookingService.Consumers;
+using BookingService.Infrastructure.Api;
 using BookingService.Infrastructure.Consul;
+using BookingService.Infrastructure.Persistence;
+using BookingService.Infrastructure.Repositories;
+using BookingService.Services;
+using Consul;
+using EventHive.Shared.Exceptions;
+using EventHive.Shared.MessageBroker;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -16,9 +26,17 @@ builder.Services.AddSingleton<IConsulClient>(_ =>
 builder.Services.AddHostedService<ConsulRegistrationService>();
 // ──────────────────────────────────────────────────────────────────────────────
 
+
+//DB
+builder.Services.AddDbContext<BookingDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    ));
+
 var secretKey = builder.Configuration["JWT:SecretKey"]
     ?? throw new InvalidOperationException("JWT:SecretKey is not configured.");
 
+//Auth Validation
 builder.Services
     .AddAuthentication(options =>
     {
@@ -44,9 +62,53 @@ builder.Services
         };
     });
 
+//RabbitMq | MassTransit
+builder.Services.AddMassTransit(x =>
+{
+    x.AddDelayedMessageScheduler();
+    x.AddConsumer<PaymentSucceededConsumer>();
+    x.AddConsumer<PaymentFailedConsumer>();
+    x.AddConsumer<ExpireBookingConsumer>();
+    x.UsingRabbitMq((ctx, cfg) =>
+    {
+        cfg.Host(
+            builder.Configuration["RabbitMQ:Host"] ?? "localhost",
+            builder.Configuration["RabbitMQ:VirtualHost"] ?? "/",
+            h =>
+            {
+                h.Username(builder.Configuration["RabbitMQ:Username"] ?? "guest");
+                h.Password(builder.Configuration["RabbitMQ:Password"] ?? "guest");
+            });
+
+        cfg.UseDelayedMessageScheduler();
+
+        cfg.Message<BookingCreated>(m => m.SetEntityName("booking-events"));
+        cfg.Publish<BookingCreated>(p =>
+        {
+            p.ExchangeType = "topic";
+        });
+        cfg.Send<BookingCreated>(s =>
+        {
+            s.UseRoutingKeyFormatter(context => "booking.created");
+        });
+
+        cfg.ConfigureEndpoints(ctx);
+    });
+});
+
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<IBookingService, BookingService.Services.BookingService>();
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient<ICatalogApi, CatalogApi>();
+
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 // Health check endpoint consumed by Consul (returns 200 OK by default)
 builder.Services.AddHealthChecks();
@@ -56,7 +118,14 @@ builder.Services.Configure<RouteOptions>(options =>
     options.LowercaseUrls = true;
 });
 
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
+
 var app = builder.Build();
+
+app.UseExceptionHandler();
 
 if (app.Environment.IsDevelopment())
 {

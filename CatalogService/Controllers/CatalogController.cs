@@ -1,5 +1,6 @@
 using Azure.Core;
-using CatalogService.DTOs;
+using CatalogService.Services.DTOs.Requests;
+using CatalogService.Services.DTOs.Responses;
 using CatalogService.Services;
 using EventHive.Shared.Common;
 using EventHive.Shared.Extensions;
@@ -37,18 +38,6 @@ namespace CatalogService.Controllers
         public async Task<IActionResult> GetPublishedEvent(Guid id)
         {
             var result = await _eventService.GetPublishedEventByIdAsync(id);
-            if (!result.IsSuccess)
-            {
-                return result.ToErrorResponse(this);
-            }
-            return Ok(result.Value);
-        }
-
-        [HttpGet("~/internal/catalog/event/availability/{id:guid}")]
-        [Authorize]
-        public async Task<IActionResult> AvailableSeats(Guid id)
-        {
-            var result = await _eventService.AvailableSeats(id);
             if (!result.IsSuccess)
             {
                 return result.ToErrorResponse(this);

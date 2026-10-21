@@ -1,10 +1,12 @@
 using CatalogService.Domain.Entities;
-using CatalogService.DTOs;
+using CatalogService.Domain.Enums;
+using CatalogService.Services.DTOs.Requests;
+using CatalogService.Services.DTOs.Responses;
 using CatalogService.Infrastructure.Persistence;
 using EventHive.Shared.Common;
 using Microsoft.EntityFrameworkCore;
 
-namespace CatalogService.Domain.Repositories
+namespace CatalogService.Infrastructure.Repositories
 {
     public class EventRepository : IEventRepository
     {
@@ -18,7 +20,7 @@ namespace CatalogService.Domain.Repositories
         public async Task<PagedResponse<PublishedEventDto>> GetPublishedEvents(int pageNumber, int pageSize)
         {
             var query = _context.Events.AsNoTracking()
-                .Where(e => e.Status == Enums.EventStatus.Published);
+                .Where(e => e.Status == EventStatus.Published);
 
             var totalCount = await query.CountAsync();
 
@@ -48,7 +50,7 @@ namespace CatalogService.Domain.Repositories
         public async Task<PublishedEventDto?> GetPublishedEventById(Guid Id)
         {
 
-            return await _context.Events.AsNoTracking().Where(e => e.Id == Id && (e.Status == Enums.EventStatus.Published || e.Status == Enums.EventStatus.Closed))
+            return await _context.Events.AsNoTracking().Where(e => e.Id == Id && (e.Status == EventStatus.Published || e.Status == EventStatus.Closed))
                 .Select(e => new PublishedEventDto(
                     e.Name,
                     e.Description,
@@ -61,35 +63,40 @@ namespace CatalogService.Domain.Repositories
 
         }
 
-        public async Task<bool> ReserveSeatsAsync(Guid eventId, int quantity)
+        public async Task<(bool Success, decimal UnitPrice)> ReserveSeatsAsync(Guid eventId, int quantity)
         {
-            var ev = await _context.Events.FirstOrDefaultAsync(e => e.Id == eventId && e.Status == Enums.EventStatus.Published);
-            
-            if (ev == null || ev.RemainingSeats < quantity)
+            var ev = await _context.Events
+                .Where(e => e.Id == eventId && e.Status == EventStatus.Published)
+                .Select(e => new { e.Price })
+                .FirstOrDefaultAsync();
+
+            if (ev == null)
             {
-                return false;
+                return (false, 0m);
             }
 
-            ev.RemainingSeats -= quantity;
-            _context.Events.Update(ev);
-            var rows = await _context.SaveChangesAsync();
-            
-            return rows > 0;
+            var rows = await _context.Events
+                .Where(e => e.Id == eventId && e.Status == EventStatus.Published && e.RemainingSeats >= quantity)
+                .ExecuteUpdateAsync(s => s.SetProperty(e => e.RemainingSeats, e => e.RemainingSeats - quantity));
+
+            if (rows == 0)
+            {
+                return (false, 0m);
+            }
+
+            return (true, ev.Price);
+            //We run ExecutUpdateAsync to decrease seats inside the dbms instead of the memory
+            //So we could minimize the risk of race conditions in memory so instead of
+            //finding the event first then updating (in memory) then saving to db which could
+            //introduce race conditions we update inside the dbms with atomic operations.
         }
 
         public async Task<bool> ReleaseSeatsAsync(Guid eventId, int quantity)
         {
-            var ev = await _context.Events.FirstOrDefaultAsync(e => e.Id == eventId);
-            
-            if (ev == null)
-            {
-                return false;
-            }
+            var rows = await _context.Events
+                .Where(e => e.Id == eventId)
+                .ExecuteUpdateAsync(s => s.SetProperty(e => e.RemainingSeats, e => e.RemainingSeats + quantity));
 
-            ev.RemainingSeats += quantity;
-            _context.Events.Update(ev);
-            var rows = await _context.SaveChangesAsync();
-            
             return rows > 0;
         }
 
