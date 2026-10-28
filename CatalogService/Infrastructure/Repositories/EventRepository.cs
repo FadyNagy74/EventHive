@@ -63,10 +63,10 @@ namespace CatalogService.Infrastructure.Repositories
 
         }
 
-        public async Task<(bool Success, decimal UnitPrice)> ReserveSeatsAsync(Guid eventId, int quantity)
+        public async Task<(bool Success, decimal UnitPrice)> ReserveSeatsAsync(Guid eventId, string eventName, int quantity)
         {
             var ev = await _context.Events
-                .Where(e => e.Id == eventId && e.Status == EventStatus.Published)
+                .Where(e => e.Id == eventId && e.Name == eventName && e.Status == EventStatus.Published)
                 .Select(e => new { e.Price })
                 .FirstOrDefaultAsync();
 

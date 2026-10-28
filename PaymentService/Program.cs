@@ -1,7 +1,15 @@
 using Consul;
+using EventHive.Shared.Exceptions;
+using EventHive.Shared.MessageBroker;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using PaymentService.Consumers;
 using PaymentService.Infrastructure.Consul;
+using PaymentService.Infrastructure.Persistence;
+using PaymentService.Infrastructure.Repositories;
+using PaymentService.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +23,12 @@ builder.Services.AddSingleton<IConsulClient>(_ =>
 
 builder.Services.AddHostedService<ConsulRegistrationService>();
 // ──────────────────────────────────────────────────────────────────────────────
+
+//DB
+builder.Services.AddDbContext<PaymentDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    ));
 
 var secretKey = builder.Configuration["JWT:SecretKey"]
     ?? throw new InvalidOperationException("JWT:SecretKey is not configured.");
@@ -44,6 +58,65 @@ builder.Services
         };
     });
 
+//RabbitMq | MassTransit
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<BookingCreatedConsumer>();
+    x.UsingRabbitMq((ctx, cfg) =>
+    {
+        cfg.Host(
+            builder.Configuration["RabbitMQ:Host"] ?? "localhost",
+            builder.Configuration["RabbitMQ:VirtualHost"] ?? "/",
+            h =>
+            {
+                h.Username(builder.Configuration["RabbitMQ:Username"] ?? "guest");
+                h.Password(builder.Configuration["RabbitMQ:Password"] ?? "guest");
+            });
+
+        cfg.ReceiveEndpoint("payment-booking-created-queue", e =>
+        {
+            e.ConfigureConsumeTopology = false;
+            e.Bind("booking-events", b =>
+            {
+                b.ExchangeType = "topic";
+                b.RoutingKey = "booking.created";
+            });
+            e.ConfigureConsumer<BookingCreatedConsumer>(ctx);
+        });
+
+        cfg.Message<PaymentSucceeded>(m => m.SetEntityName("payment-succeeded"));
+        cfg.Publish<PaymentSucceeded>(p =>
+        {
+            p.ExchangeType = "topic";
+        });
+        cfg.Send<PaymentSucceeded>(s =>
+        {
+            s.UseRoutingKeyFormatter(context => "payment.succeeded");
+        });
+
+        cfg.Message<PaymentFailed>(m => m.SetEntityName("payment-failed"));
+        cfg.Publish<PaymentFailed>(p =>
+        {
+            p.ExchangeType = "topic";
+        });
+        cfg.Send<PaymentFailed>(s =>
+        {
+            s.UseRoutingKeyFormatter(context => "payment.failed");
+        });
+
+        cfg.ConfigureEndpoints(ctx);
+    });
+});
+
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<IPaymentService, PaymentService.Services.PaymentService>();
+
+builder.Services.AddHttpClient("Paymob", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["Paymob:BaseUrl"] ?? "https://accept.paymob.com");
+    client.DefaultRequestHeaders.Add("Authorization", $"Token {builder.Configuration["Paymob:SecretKey"]}");
+});
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -51,12 +124,17 @@ builder.Services.AddSwaggerGen();
 // Health check endpoint consumed by Consul (returns 200 OK by default)
 builder.Services.AddHealthChecks();
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
 builder.Services.Configure<RouteOptions>(options =>
 {
     options.LowercaseUrls = true;
 });
 
 var app = builder.Build();
+
+app.UseExceptionHandler();
 
 if (app.Environment.IsDevelopment())
 {

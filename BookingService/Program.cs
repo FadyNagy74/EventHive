@@ -69,6 +69,7 @@ builder.Services.AddMassTransit(x =>
     x.AddConsumer<PaymentSucceededConsumer>();
     x.AddConsumer<PaymentFailedConsumer>();
     x.AddConsumer<ExpireBookingConsumer>();
+    x.AddConsumer<EventCancelledConsumer>();
     x.UsingRabbitMq((ctx, cfg) =>
     {
         cfg.Host(
@@ -79,6 +80,39 @@ builder.Services.AddMassTransit(x =>
                 h.Username(builder.Configuration["RabbitMQ:Username"] ?? "guest");
                 h.Password(builder.Configuration["RabbitMQ:Password"] ?? "guest");
             });
+
+        cfg.ReceiveEndpoint("payment-succeeded-queue", e =>
+        {
+            e.ConfigureConsumeTopology = false;
+            e.Bind("payment-succeeded", b =>
+            {
+                b.ExchangeType = "topic";
+                b.RoutingKey = "payment.succeeded";
+            });
+            e.ConfigureConsumer<PaymentSucceededConsumer>(ctx);
+        });
+
+        cfg.ReceiveEndpoint("payment-failed-queue", e =>
+        {
+            e.ConfigureConsumeTopology = false;
+            e.Bind("payment-failed", b =>
+            {
+                b.ExchangeType = "topic";
+                b.RoutingKey = "payment.failed";
+            });
+            e.ConfigureConsumer<PaymentFailedConsumer>(ctx);
+        });
+
+        cfg.ReceiveEndpoint("event-cancelled-queue", e =>
+        {
+            e.ConfigureConsumeTopology = false;
+            e.Bind("event-cancelled", b =>
+            {
+                b.ExchangeType = "topic";
+                b.RoutingKey = "event.cancelled";
+            });
+            e.ConfigureConsumer<EventCancelledConsumer>(ctx);
+        });
 
         cfg.UseDelayedMessageScheduler();
 

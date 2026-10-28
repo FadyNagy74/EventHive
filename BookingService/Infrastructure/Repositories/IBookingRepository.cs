@@ -13,6 +13,7 @@ namespace BookingService.Infrastructure.Repositories
         Task<PagedResponse<BookingDetailsDto>> GetBookingsByUserIdAsync(Guid userId, int pageNumber = 1, int pageSize = 20);
         Task UpdateBookingAsync(Booking booking);
         Task<bool> ChangeBookingStateAsync(Guid bookingId, BookingStatus expectedCurrent, BookingStatus newStatus);
+        Task<int> CancelEventBookings(Guid eventId);
 
     }
 }

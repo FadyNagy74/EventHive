@@ -47,9 +47,9 @@ namespace CatalogService.Controllers
 
         [HttpPost("~/internal/catalog/event/{id:guid}/reserve")]
         [Authorize]
-        public async Task<IActionResult> ReserveSeats(Guid id, [FromQuery] int quantity)
+        public async Task<IActionResult> ReserveSeats(Guid id, string eventName, int quantity)
         {
-            var result = await _eventService.ReserveSeatsAsync(id, quantity);
+            var result = await _eventService.ReserveSeatsAsync(id, eventName, quantity);
             if (!result.IsSuccess)
             {
                 return result.ToErrorResponse(this);

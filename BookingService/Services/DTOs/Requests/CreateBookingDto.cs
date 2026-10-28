@@ -7,6 +7,8 @@ namespace BookingService.Services.DTOs.Requests
         [Required(ErrorMessage = "The event ID is required.")]
         Guid? EventId,
 
+        [Required(ErrorMessage = "The event name is required.")]
+        string? EventName,
         [Required(ErrorMessage = "The ticket quantity is required.")]
         [Range(1, 10, ErrorMessage = "Quantity must be between 1 and 10 tickets.")]
         int? Quantity

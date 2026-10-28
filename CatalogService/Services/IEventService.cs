@@ -9,7 +9,7 @@ namespace CatalogService.Services
         Task<Result<PagedResponse<PublishedEventDto>>> GetPublishedEventsAsync(int pageNumber = 1, int pageSize = 20);
 
         Task<Result<PublishedEventDto>> GetPublishedEventByIdAsync(Guid id);
-        Task<Result<ReserveSeatsResponseDto>> ReserveSeatsAsync(Guid id, int quantity);
+        Task<Result<ReserveSeatsResponseDto>> ReserveSeatsAsync(Guid id, string eventName, int quantity);
         Task<Result<string>> ReleaseSeatsAsync(Guid id, int quantity);
         Task<Result<string>> CreateEvent(CreateEventDto dto);
         Task<Result<string>> UpdateEventAsync(Guid id, UpdateEventDto dto);

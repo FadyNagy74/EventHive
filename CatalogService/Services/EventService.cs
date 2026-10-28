@@ -46,16 +46,16 @@ namespace CatalogService.Services
         }
 
 
-        public async Task<Result<ReserveSeatsResponseDto>> ReserveSeatsAsync(Guid id, int quantity)
+        public async Task<Result<ReserveSeatsResponseDto>> ReserveSeatsAsync(Guid id, string eventName, int quantity)
         {
             if (quantity <= 0)
                 return Result<ReserveSeatsResponseDto>.Failure(Error.Validation("Quantity must be greater than zero."));
 
-            var (success, unitPrice) = await _eventRepository.ReserveSeatsAsync(id, quantity);
+            var (success, unitPrice) = await _eventRepository.ReserveSeatsAsync(id, eventName, quantity);
             
             if (!success)
             {
-                return Result<ReserveSeatsResponseDto>.Failure(Error.Conflict("Failed to reserve seats. Either the event does not exist, is not published, or there are not enough remaining seats."));
+                return Result<ReserveSeatsResponseDto>.Failure(Error.Conflict("Failed to reserve seats. Either the event does not exist, is not published, event name doesn't match, or there are not enough remaining seats."));
             }
 
             var totalPrice = unitPrice * quantity;
@@ -207,7 +207,7 @@ namespace CatalogService.Services
             await _eventRepository.UpdateEventAsync(ev);
 
             //RabbitMq
-            await _publishEndpoint.Publish(new EventCancelled(ev.Id));
+            await _publishEndpoint.Publish(new EventCancelled(ev.Id), context => context.SetRoutingKey("event.cancelled"));
             _logger.LogInformation("EventCancelled published for event {EventId}.", ev.Id);
 
             return Result<string>.Success("Event cancelled successfully");

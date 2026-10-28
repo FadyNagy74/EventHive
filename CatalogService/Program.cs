@@ -4,6 +4,7 @@ using CatalogService.Infrastructure.Repositories;
 using CatalogService.Services;
 using Consul;
 using EventHive.Shared.Exceptions;
+using EventHive.Shared.MessageBroker;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
@@ -74,6 +75,16 @@ builder.Services.AddMassTransit(x =>
                 h.Username(builder.Configuration["RabbitMQ:Username"] ?? "guest");
                 h.Password(builder.Configuration["RabbitMQ:Password"] ?? "guest");
             });
+
+        cfg.Message<EventCancelled>(m => m.SetEntityName("event-cancelled"));
+        cfg.Publish<EventCancelled>(p =>
+        {
+            p.ExchangeType = "topic";
+        });
+        cfg.Send<EventCancelled>(s =>
+        {
+            s.UseRoutingKeyFormatter(context => "event.cancelled");
+        });
     });
 });
 // ──────────────────────────────────────────────────────────────────────────────

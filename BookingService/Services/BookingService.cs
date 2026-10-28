@@ -44,6 +44,10 @@ namespace BookingService.Services
             {
                 return Result<BookingResponseDto>.Failure(Error.Validation("Quantity must be greater than zero."));
             }
+            if (string.IsNullOrEmpty(dto.EventName) || dto.EventName == string.Empty)
+            {
+                return Result<BookingResponseDto>.Failure(Error.Validation("A valid Event Name is required."));
+            }
 
             if (userId == Guid.Empty)
             {
@@ -57,7 +61,7 @@ namespace BookingService.Services
                     Error.Conflict("You already have an active pending booking for this event. Please complete or cancel it before creating a new one."));
             }
 
-            var result = await _catalogApi.ReserveSeatsAsync(dto.EventId.Value, dto.Quantity.Value);
+            var result = await _catalogApi.ReserveSeatsAsync(dto.EventId.Value, dto.EventName, dto.Quantity.Value);
             if (!result.IsSuccess)
             {
                 return Result<BookingResponseDto>.Failure(result.Errors);
@@ -65,6 +69,7 @@ namespace BookingService.Services
             Booking newBooking = new Booking
             {
                 EventId = dto.EventId.Value,
+                EventName = dto.EventName,
                 UserId = userId,
                 Quantity = dto.Quantity.Value,
                 Status = BookingStatus.Pending,
@@ -79,9 +84,11 @@ namespace BookingService.Services
                 await _publishEndpoint.Publish(new BookingCreated
                 {
                     BookingId = newBooking.Id,
+                    EventName = dto.EventName,
                     UserId = userId,
                     EventId = dto.EventId.Value,
                     Quantity = dto.Quantity.Value,
+                    UnitPrice = result.Value!.UnitPrice,
                     AmountDue = result.Value!.TotalPrice
                 }, context => context.SetRoutingKey("booking.created"));
 
@@ -92,10 +99,12 @@ namespace BookingService.Services
                 var responseDto = new BookingResponseDto(
                     newBooking.Id,
                     dto.EventId.Value,
+                    dto.EventName,
                     userId,
                     dto.Quantity.Value,
                     newBooking.Status,
                     newBooking.TotalPrice,
+                    result.Value!.TotalPrice,
                     newBooking.CreatedAt,
                     newBooking.UpdatedAt
                 );
@@ -110,8 +119,21 @@ namespace BookingService.Services
             }
             catch (Exception ex)
             {
+                if (newBooking.Id != Guid.Empty)
+                {
+                    try
+                    {
+                        await _bookingRepository.ChangeBookingStateAsync(
+                            newBooking.Id, BookingStatus.Pending, BookingStatus.Cancelled);
+                    }
+                    catch (Exception dbEx)
+                    {
+                        _logger.LogError(dbEx, "Failed to transition booking {BookingId} to Cancelled after publish failure.", newBooking.Id);
+                    }
+                }
+
                 await _catalogApi.ReleaseSeatsAsync(dto.EventId.Value, dto.Quantity.Value);
-                _logger.LogError(ex, "Booking failed to save. Seats released.");
+                _logger.LogError(ex, "Booking failed to save or publish events. Seats released and booking marked as Cancelled.");
                 return Result<BookingResponseDto>.Failure(Error.Failure("Booking failed, try again."));
             }
 

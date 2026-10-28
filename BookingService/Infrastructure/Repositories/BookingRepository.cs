@@ -86,5 +86,14 @@ namespace BookingService.Infrastructure.Repositories
             return rows > 0;
         }
 
+        public async Task<int> CancelEventBookings(Guid eventId)
+        {
+            var rows = await _context.Bookings.Where(b => b.EventId == eventId && b.Status != BookingStatus.Cancelled)
+                .ExecuteUpdateAsync(s => s
+                    .SetProperty(b => b.Status, BookingStatus.Cancelled)
+                    .SetProperty(b => b.UpdatedAt, DateTime.UtcNow));
+            return rows;
+        }
+
     }
 }

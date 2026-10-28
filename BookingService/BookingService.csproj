@@ -26,5 +26,8 @@
 	<ItemGroup>
 		<ProjectReference Include="..\EventHive.Shared\EventHive.Shared.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="BackgroundJobs\" />
+	</ItemGroup>
 
 </Project>

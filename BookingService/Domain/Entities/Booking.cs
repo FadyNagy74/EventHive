@@ -6,6 +6,7 @@ namespace BookingService.Domain.Entities
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public Guid EventId { get; set; }
+        public string EventName { get; set; } = string.Empty;
         public Guid UserId { get; set; }
         public int Quantity { get; set; }
         public BookingStatus Status { get; set; }

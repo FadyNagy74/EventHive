@@ -39,12 +39,13 @@ namespace BookingService.Infrastructure.Api
             _configuration = configuration;
         }
 
-        public async Task<Result<ReserveSeatsResponseDto>> ReserveSeatsAsync(Guid? eventId, int? quantity, CancellationToken cancellationToken = default)
+        public async Task<Result<ReserveSeatsResponseDto>> ReserveSeatsAsync(Guid? eventId, string eventName,int? quantity, CancellationToken cancellationToken = default)
         {
             try
             {
                 var baseUrl = await GetServiceBaseUrlAsync(CatalogServiceName);
-                var requestUri = $"{baseUrl.TrimEnd('/')}/internal/catalog/event/{eventId}/reserve?quantity={quantity}";
+                var encodedEventName = Uri.EscapeDataString(eventName);
+                var requestUri = $"{baseUrl.TrimEnd('/')}/internal/catalog/event/{eventId}/reserve?eventName={encodedEventName}&quantity={quantity}";
                 using var request = new HttpRequestMessage(HttpMethod.Post, requestUri);
                 AddAuthorizationHeader(request);
 
