@@ -11,7 +11,9 @@ using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Http.Resilience;
 using Microsoft.IdentityModel.Tokens;
+using Polly;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -114,7 +116,14 @@ builder.Services.AddMassTransit(x =>
             e.ConfigureConsumer<EventCancelledConsumer>(ctx);
         });
 
+        cfg.ReceiveEndpoint("expire-booking-queue", e =>
+        {
+            e.ConfigureConsumer<ExpireBookingConsumer>(ctx);
+        });
+
         cfg.UseDelayedMessageScheduler();
+
+        EndpointConvention.Map<ExpireBooking>(new Uri("queue:expire-booking-queue"));
 
         cfg.Message<BookingCreated>(m => m.SetEntityName("booking-events"));
         cfg.Publish<BookingCreated>(p =>
@@ -126,6 +135,16 @@ builder.Services.AddMassTransit(x =>
             s.UseRoutingKeyFormatter(context => "booking.created");
         });
 
+        cfg.Message<BookingExpired>(m => m.SetEntityName("booking-events"));
+        cfg.Publish<BookingExpired>(p =>
+        {
+            p.ExchangeType = "topic";
+        });
+        cfg.Send<BookingExpired>(s =>
+        {
+            s.UseRoutingKeyFormatter(context => "booking.expired");
+        });
+
         cfg.ConfigureEndpoints(ctx);
     });
 });
@@ -134,7 +153,18 @@ builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddScoped<IBookingService, BookingService.Services.BookingService>();
 
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddHttpClient<ICatalogApi, CatalogApi>();
+builder.Services.AddHttpClient<ICatalogApi, CatalogApi>()
+    .AddResilienceHandler("catalog-pipeline", pipelineBuilder =>
+    {
+        pipelineBuilder.AddTimeout(TimeSpan.FromSeconds(5));
+        pipelineBuilder.AddCircuitBreaker(new HttpCircuitBreakerStrategyOptions
+        {
+            FailureRatio = 0.5,
+            SamplingDuration = TimeSpan.FromSeconds(10),
+            MinimumThroughput = 5,
+            BreakDuration = TimeSpan.FromSeconds(25)
+        });
+    });
 
 
 builder.Services.AddControllers();

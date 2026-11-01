@@ -1,4 +1,5 @@
 using EventHive.Shared.Common;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventHive.Shared.Extensions;
@@ -20,9 +21,10 @@ public static class ResultExtensions
             ErrorType.NotFound     => controller.NotFound(descriptions),
             ErrorType.Validation   => controller.BadRequest(descriptions),
             ErrorType.Unauthorized => controller.Unauthorized(),
-            ErrorType.Conflict     => controller.Conflict(descriptions),
-            ErrorType.Failure      => controller.StatusCode(500, descriptions),
-            _                      => controller.StatusCode(500, descriptions)
+            ErrorType.Conflict           => controller.Conflict(descriptions),
+            ErrorType.ServiceUnavailable => controller.StatusCode(StatusCodes.Status503ServiceUnavailable, descriptions),
+            ErrorType.Failure            => controller.StatusCode(500, descriptions),
+            _                            => controller.StatusCode(500, descriptions)
         };
     }
 }

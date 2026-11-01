@@ -4,12 +4,14 @@ using EventHive.Shared.MessageBroker;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Http.Resilience;
 using Microsoft.IdentityModel.Tokens;
 using PaymentService.Consumers;
 using PaymentService.Infrastructure.Consul;
 using PaymentService.Infrastructure.Persistence;
 using PaymentService.Infrastructure.Repositories;
 using PaymentService.Services;
+using Polly;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -115,6 +117,17 @@ builder.Services.AddHttpClient("Paymob", client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["Paymob:BaseUrl"] ?? "https://accept.paymob.com");
     client.DefaultRequestHeaders.Add("Authorization", $"Token {builder.Configuration["Paymob:SecretKey"]}");
+})
+.AddResilienceHandler("paymob-pipeline", pipelineBuilder =>
+{
+    pipelineBuilder.AddTimeout(TimeSpan.FromSeconds(6));
+    pipelineBuilder.AddCircuitBreaker(new HttpCircuitBreakerStrategyOptions
+    {
+        FailureRatio = 0.5,
+        SamplingDuration = TimeSpan.FromSeconds(15),
+        MinimumThroughput = 5,
+        BreakDuration = TimeSpan.FromSeconds(30)
+    });
 });
 
 builder.Services.AddControllers();

@@ -73,3 +73,6 @@ npm-debug.log
 
 ## Documentation (Temporarily ignored)
 *.md
+
+## RabbitMq 
+definitions.json

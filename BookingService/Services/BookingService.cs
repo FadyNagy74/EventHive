@@ -89,10 +89,12 @@ namespace BookingService.Services
                     EventId = dto.EventId.Value,
                     Quantity = dto.Quantity.Value,
                     UnitPrice = result.Value!.UnitPrice,
-                    AmountDue = result.Value!.TotalPrice
+                    AmountDue = result.Value!.TotalPrice,
+                    EventDate = result.Value!.EventDate
                 }, context => context.SetRoutingKey("booking.created"));
 
-                await _messageScheduler.SchedulePublish(
+                await _messageScheduler.ScheduleSend(
+                    new Uri("queue:expire-booking-queue"),
                     TimeSpan.FromMinutes(15),
                     new ExpireBooking(newBooking.Id));
 

@@ -1,3 +1,4 @@
+using EventHive.Shared.Common;
 using EventHive.Shared.MessageBroker;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
@@ -5,6 +6,8 @@ using PaymentService.Domain.Entities;
 using PaymentService.Infrastructure.Repositories;
 using PaymentService.Services.Requests;
 using PaymentService.Services.Responses;
+using Polly.CircuitBreaker;
+using Polly.Timeout;
 using System.Net.Http.Json;
 
 namespace PaymentService.Consumers
@@ -96,6 +99,18 @@ namespace PaymentService.Consumers
             {
                 response = await client.PostAsJsonAsync("/v1/intention/", payload);
             }
+            catch (BrokenCircuitException ex)
+            {
+                _logger.LogWarning(ex, "Paymob circuit breaker is OPEN for booking {BookingId}.", message.BookingId);
+                await HandlePaymentFailureAsync(message, context, ServiceMessages.PaymentGatewayUnavailable);
+                return;
+            }
+            catch (TimeoutRejectedException ex)
+            {
+                _logger.LogWarning(ex, "Paymob call timed out for booking {BookingId}.", message.BookingId);
+                await HandlePaymentFailureAsync(message, context, ServiceMessages.PaymentGatewayUnavailable);
+                return;
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "HTTP call to Paymob /v1/intention failed for booking {BookingId}.", message.BookingId);
@@ -156,6 +171,29 @@ namespace PaymentService.Consumers
             _logger.LogInformation(
                 "Payment record created for booking {BookingId}. ExternalOrderId: {ExternalOrderId}.",
                 message.BookingId, intentionResponse.intention_order_id);
+        }
+
+        private async Task HandlePaymentFailureAsync(BookingCreated message, ConsumeContext<BookingCreated> context, string reason)
+        {
+            var payment = new Payment
+            {
+                BookingId = message.BookingId,
+                UserId = message.UserId,
+                Amount = message.AmountDue,
+                Status = "Failed"
+            };
+
+            try
+            {
+                await _paymentRepository.CreateAsync(payment);
+            }
+            catch (DbUpdateException ex) when (ex.InnerException?.Message.Contains("UQ_Payments_BookingId") == true)
+            {
+                _logger.LogWarning("Duplicate payment insert for booking {BookingId} caught by unique index.", message.BookingId);
+            }
+
+            await context.Publish(new PaymentFailed(message.BookingId, reason),
+                ctx => ctx.SetRoutingKey("payment.failed"));
         }
     }
 }

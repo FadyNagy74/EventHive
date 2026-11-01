@@ -25,4 +25,7 @@ public class Error
 
     public static Error Conflict(string description)
         => new(description, ErrorType.Conflict);
+
+    public static Error ServiceUnavailable(string description)
+        => new(description, ErrorType.ServiceUnavailable);
 }

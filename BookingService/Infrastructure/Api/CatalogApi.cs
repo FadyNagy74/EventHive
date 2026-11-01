@@ -2,6 +2,8 @@ using BookingService.Services.DTOs.Responses;
 using Consul;
 using EventHive.Shared.Common;
 using Microsoft.IdentityModel.Tokens;
+using Polly.CircuitBreaker;
+using Polly.Timeout;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Http.Headers;
@@ -64,6 +66,16 @@ namespace BookingService.Infrastructure.Api
                 var error = await ParseErrorAsync(response, cancellationToken);
                 return Result<ReserveSeatsResponseDto>.Failure(error);
             }
+            catch (BrokenCircuitException ex)
+            {
+                _logger.LogWarning(ex, "CatalogService circuit breaker is OPEN while calling ReserveSeatsAsync for EventId: {EventId}", eventId);
+                return Result<ReserveSeatsResponseDto>.Failure(Error.ServiceUnavailable(ServiceMessages.CatalogServiceUnavailable));
+            }
+            catch (TimeoutRejectedException ex)
+            {
+                _logger.LogWarning(ex, "CatalogService call timed out while calling ReserveSeatsAsync for EventId: {EventId}", eventId);
+                return Result<ReserveSeatsResponseDto>.Failure(Error.ServiceUnavailable(ServiceMessages.CatalogServiceUnavailable));
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error calling CatalogService ReserveSeatsAsync for EventId: {EventId}", eventId);
@@ -90,6 +102,16 @@ namespace BookingService.Infrastructure.Api
 
                 var error = await ParseErrorAsync(response, cancellationToken);
                 return Result<string>.Failure(error);
+            }
+            catch (BrokenCircuitException ex)
+            {
+                _logger.LogWarning(ex, "CatalogService circuit breaker is OPEN while calling ReleaseSeatsAsync for EventId: {EventId}", eventId);
+                return Result<string>.Failure(Error.ServiceUnavailable(ServiceMessages.CatalogServiceUnavailable));
+            }
+            catch (TimeoutRejectedException ex)
+            {
+                _logger.LogWarning(ex, "CatalogService call timed out while calling ReleaseSeatsAsync for EventId: {EventId}", eventId);
+                return Result<string>.Failure(Error.ServiceUnavailable(ServiceMessages.CatalogServiceUnavailable));
             }
             catch (Exception ex)
             {
@@ -128,7 +150,7 @@ namespace BookingService.Infrastructure.Api
             lock (_tokenLock)
             {
                 if (_cachedServiceToken != null && DateTime.UtcNow < _tokenExpiresAt)
-                {
++                {
                     return _cachedServiceToken;
                 }
 
@@ -200,6 +222,7 @@ namespace BookingService.Infrastructure.Api
                 HttpStatusCode.Conflict => Error.Conflict(description),
                 HttpStatusCode.BadRequest => Error.Validation(description),
                 HttpStatusCode.Unauthorized => Error.Unauthorized(description),
+                HttpStatusCode.ServiceUnavailable => Error.ServiceUnavailable(ServiceMessages.CatalogServiceUnavailable),
                 _ => Error.Failure(description)
             };
         }

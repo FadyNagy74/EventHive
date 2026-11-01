@@ -51,7 +51,7 @@ namespace CatalogService.Services
             if (quantity <= 0)
                 return Result<ReserveSeatsResponseDto>.Failure(Error.Validation("Quantity must be greater than zero."));
 
-            var (success, unitPrice) = await _eventRepository.ReserveSeatsAsync(id, eventName, quantity);
+            var (success, unitPrice, eventDate) = await _eventRepository.ReserveSeatsAsync(id, eventName, quantity);
             
             if (!success)
             {
@@ -59,7 +59,7 @@ namespace CatalogService.Services
             }
 
             var totalPrice = unitPrice * quantity;
-            return Result<ReserveSeatsResponseDto>.Success(new ReserveSeatsResponseDto(unitPrice, totalPrice));
+            return Result<ReserveSeatsResponseDto>.Success(new ReserveSeatsResponseDto(unitPrice, totalPrice, eventDate));
         }
 
         public async Task<Result<string>> ReleaseSeatsAsync(Guid id, int quantity)

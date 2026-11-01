@@ -63,16 +63,16 @@ namespace CatalogService.Infrastructure.Repositories
 
         }
 
-        public async Task<(bool Success, decimal UnitPrice)> ReserveSeatsAsync(Guid eventId, string eventName, int quantity)
+        public async Task<(bool Success, decimal UnitPrice, DateTime EventDate)> ReserveSeatsAsync(Guid eventId, string eventName, int quantity)
         {
             var ev = await _context.Events
                 .Where(e => e.Id == eventId && e.Name == eventName && e.Status == EventStatus.Published)
-                .Select(e => new { e.Price })
+                .Select(e => new { e.Price, e.Date })
                 .FirstOrDefaultAsync();
 
             if (ev == null)
             {
-                return (false, 0m);
+                return (false, 0m, default);
             }
 
             var rows = await _context.Events
@@ -81,10 +81,10 @@ namespace CatalogService.Infrastructure.Repositories
 
             if (rows == 0)
             {
-                return (false, 0m);
+                return (false, 0m, default);
             }
 
-            return (true, ev.Price);
+            return (true, ev.Price, ev.Date);
             //We run ExecutUpdateAsync to decrease seats inside the dbms instead of the memory
             //So we could minimize the risk of race conditions in memory so instead of
             //finding the event first then updating (in memory) then saving to db which could

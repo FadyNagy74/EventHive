@@ -37,7 +37,7 @@ namespace BookingService.Consumers
             if (booking.Status == BookingStatus.Expired)
             {
                 _logger.LogInformation("Booking {BookingId} is already expired. Re-publishing BookingExpired in case it was missed.", bookingId);
-                await context.Publish(new BookingExpired(bookingId));
+                await context.Publish(new BookingExpired(bookingId), ctx => ctx.SetRoutingKey("booking.expired"));
                 return;
             }
 
@@ -63,7 +63,7 @@ namespace BookingService.Consumers
                     _logger.LogError("Failed to release seats for expired booking {BookingId}.", bookingId);
                 }
 
-                await context.Publish(new BookingExpired(bookingId));
+                await context.Publish(new BookingExpired(bookingId), ctx => ctx.SetRoutingKey("booking.expired"));
                 _logger.LogInformation("Published BookingExpired event for booking {BookingId}.", bookingId);
             }
         }
