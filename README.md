@@ -26,85 +26,37 @@ EventHive is an enterprise-grade, distributed microservices platform built with 
 
 ## 1. Architecture Overview
 
-```mermaid
-flowchart TD
-    subgraph Clients["Clients & External Parties"]
-        User["Client / Browser / Postman"]
-        GoogleAuth["Google Identity (OAuth 2.0)"]
-        PaymobGateway["Paymob Payment Gateway"]
-    end
+EventHive is organized as a distributed, modular microservices platform where services are independently deployable, maintain isolated data stores, and communicate via a combination of synchronous HTTP and asynchronous message queues.
 
-    subgraph GatewayPerimeter["Perimeter Network (HTTPS :7107)"]
-        Gateway["YARP API Gateway<br/>/api/*"]
-    end
+### 1.1 API Gateway & Perimeter Security
+- **Reverse Proxy (YARP):** Acts as the single public entry point for all external client and Postman traffic (`https://localhost:7107`). It maps external path prefixes (`/api/authentication/*`, `/api/catalog/*`, `/api/booking/*`, `/api/payment/*`) directly to downstream services.
+- **Perimeter TLS Termination:** All client traffic is encrypted over HTTPS at the gateway. Internal inter-service traffic stays on the private network over HTTP (`RequireHttpsMetadata = false`), keeping downstream services fast and unburdened by TLS handshakes.
+- **Internal Route Protection:** Internal-only service-to-service endpoints (such as `~/internal/catalog/event/...`) are omitted from YARP routing tables, guaranteeing they are unreachable from outside the private network.
 
-    subgraph Discovery["Service Registry"]
-        Consul[("Consul Server (:8500)<br/>Health Checks & Registry")]
-    end
+### 1.2 Dynamic Service Discovery (Consul)
+- **Self-Registration:** Each microservice automatically registers its instance metadata (service name, host, port, and health check path) with Consul on application startup.
+- **Health Monitoring:** Consul continuously queries the `/health` endpoint of each service every 10 seconds.
+- **Dynamic Routing:** YARP periodically queries Consul to discover healthy downstream instances, dynamically balancing load without static IP or port configurations.
 
-    subgraph InternalServices["Private Microservices Network (HTTP)"]
-        AuthSvc["Authentication Service (:5008)<br/>Google OAuth & JWT Issuance"]
-        CatSvc["Catalog Service (:5041)<br/>Events & Seat Inventory"]
-        BookSvc["Booking Service (:5118)<br/>Booking Lifecycle Orchestrator"]
-        PaySvc["Payment Service (:5190)<br/>Intentions & Webhooks"]
-        NotifSvc["Notification Service (:5059)<br/>Event Consumer & Dispatcher"]
-    end
+### 1.3 Core Microservices
+- **Authentication Service (`:5008` / `:7158`):** Manages Google OAuth 2.0 authentication. Validates external Google identity tokens, provisions internal user accounts, and issues signed symmetric JWT access tokens and rotatable refresh tokens.
+- **Catalog Service (`:5041` / `:7278`):** Manages event creation, publishing, ticket capacity, and seat availability. Exposes atomic internal endpoints for reserving and releasing seat inventory.
+- **Booking Service (`:5118` / `:7108`):** Orchestrates the booking lifecycle. Coordinates synchronous seat reservations with CatalogService, publishes domain events, and handles automatic 15-minute booking expirations.
+- **Payment Service (`:5190` / `:7051`):** Serves as the integration boundary for Paymob. Consumes booking events to create payment intentions via Paymob's REST API, generates customer checkout links, verifies webhook HMAC signatures on callbacks, and publishes payment outcomes.
+- **Notification Service (`:5059` / `:7099`):** Pure consumer service that listens to lifecycle events across the platform and dispatches customer notifications (emails/logs) with strict MongoDB-backed idempotency.
 
-    subgraph EventBus["Asynchronous Event Broker"]
-        RabbitMQ{{"RabbitMQ (:5672)<br/>Topic Exchanges & Delayed Scheduling"}}
-    end
+### 1.4 Communication & Messaging Paradigm
+- **Synchronous HTTP (with Circuit Breakers):** Used exclusively when immediate, strongly consistent feedback is required (e.g., BookingService checking seat availability and holding seats in CatalogService). Protected by Polly Circuit Breakers to fail fast and prevent thread starvation if dependencies degrade.
+- **Asynchronous Event-Driven Bus (RabbitMQ & MassTransit):** Used for all cross-service notifications and decoupled lifecycle side-effects. All events (`BookingCreated`, `PaymentSucceeded`, `PaymentFailed`, `BookingExpired`, `EventCancelled`) are routed through topic exchanges with specific routing keys (`booking.created`, `payment.succeeded`, etc.).
+- **Delayed Message Scheduling:** Implemented via RabbitMQ's Delayed Message Exchange plugin (`x-delayed-message`). When a booking is created, an expiration event is scheduled 15 minutes into the future to automatically release held seats if payment is abandoned.
 
-    subgraph Databases["Polyglot Storage"]
-        AuthDB[("SQL Server<br/>EventHiveAuth")]
-        CatDB[("SQL Server<br/>EventHiveCatalog")]
-        BookDB[("SQL Server<br/>EventHiveBooking")]
-        PayDB[("SQL Server<br/>EventHivePayment")]
-        NotifDB[("MongoDB (:27017)<br/>EventHiveNotification")]
-    end
-
-    %% External routing
-    User -->|"HTTPS Request"| Gateway
-    User -.->|"OAuth Sign-In"| GoogleAuth
-    GoogleAuth -.->|"OAuth Code"| Gateway
-
-    %% Discovery
-    InternalServices -.->|"Heartbeat & Registration"| Consul
-    Gateway -.->|"Poll Healthy Endpoints"| Consul
-
-    %% Gateway Routing
-    Gateway -->|"/api/authentication/*"| AuthSvc
-    Gateway -->|"/api/catalog/*"| CatSvc
-    Gateway -->|"/api/booking/*"| BookSvc
-    Gateway -->|"/api/payment/*"| PaySvc
-
-    %% Sync Inter-service with Circuit Breaker
-    BookSvc ==>|"Sync HTTP Reserve/Release<br/>(Polly Circuit Breaker)"| CatSvc
-
-    %% Async Messaging
-    BookSvc -->|"BookingCreated / BookingExpired"| RabbitMQ
-    RabbitMQ -->|"BookingCreated"| PaySvc
-    PaySvc -->|"Create Intention"| PaymobGateway
-    PaymobGateway -.->|"Webhook via ngrok"| PaySvc
-    PaySvc -->|"PaymentSucceeded / PaymentFailed"| RabbitMQ
-    RabbitMQ -->|"PaymentSucceeded / PaymentFailed"| BookSvc
-    RabbitMQ -->|"All Lifecycle Events"| NotifSvc
-    CatSvc -->|"EventCancelled"| RabbitMQ
-
-    %% Database links
-    AuthSvc --- AuthDB
-    CatSvc --- CatDB
-    BookSvc --- BookDB
-    PaySvc --- PayDB
-    NotifSvc --- NotifDB
-```
-
-### Core Architecture Highlights
-- **Perimeter Security:** TLS terminates at the API Gateway (`https://localhost:7107`). All downstream microservices run on internal HTTP on a private network (`RequireHttpsMetadata = false`).
-- **Dynamic Service Discovery:** Services register themselves with **Consul** on startup. YARP periodically queries Consul for healthy instances to route traffic.
-- **Asynchronous Event-Driven Decoupling:** RabbitMQ (via MassTransit) handles domain lifecycle events (`BookingCreated`, `PaymentSucceeded`, `PaymentFailed`, `BookingExpired`, `EventCancelled`) using topic exchanges.
-- **Delayed Message Scheduling:** Expire-booking timer runs via RabbitMQ's Delayed Message Exchange plugin (`x-delayed-message`) to automatically release abandoned seat holds after 15 minutes.
-- **Circuit Breakers & Fault Tolerance:** Polly-based resilience pipelines prevent cascading failures during internal Catalog dependency or external Paymob gateway degradation.
-- **Polyglot Persistence:** SQL Server per transactional service (Auth, Catalog, Booking, Payment) and MongoDB for event-driven notification auditing.
+### 1.5 Polyglot Data Persistence
+- **Database per Service:** Every transactional service maintains its own isolated database to prevent coupling:
+  - `EventHiveAuth` (SQL Server) — User identities, credentials, refresh tokens.
+  - `EventHiveCatalog` (SQL Server) — Events, venue capacities, seat adjustment audit logs.
+  - `EventHiveBooking` (SQL Server) — Customer bookings, ticket counts, booking statuses (`Pending`, `Confirmed`, `Cancelled`, `Expired`).
+  - `EventHivePayment` (SQL Server) — Payment intentions, external Paymob order references, transactions.
+  - `EventHiveNotification` (MongoDB) — Notification documents, delivery timestamps, idempotency tracking against duplicate RabbitMQ redeliveries.
 
 ---
 
