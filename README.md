@@ -26,41 +26,76 @@ EventHive is an enterprise-grade, distributed microservices platform built with 
 
 ## 1. Architecture Overview
 
-```
-                                +---------------------------------------------+
-                                |               Internet / Client             |
-                                +----------------------+----------------------+
-                                                       | HTTPS (:7107)
-                                                       v
-                                +---------------------------------------------+
-                                |              API Gateway (YARP)              |
-                                |     Path-based routing to private network    |
-                                +----+----------+----------+----------+-------+
-                                     |          |          |          |
-                    +----------------+          |          |          +----------------+
-                    | HTTP (:5008)              | HTTP     | HTTP                      | HTTP (:5190)
-                    v                           v (:5041)  v (:5118)                   v
-          +-------------------+        +-------------+  +--------------+     +-------------------+
-          |  Authentication   |        |   Catalog   |  |   Booking    |     |      Payment      |
-          |      Service      |        |   Service   |  |   Service    |     |      Service      |
-          +---------+---------+        +------+------+  +------+-------+     +---------+---------+
-                    |                         ^                |                       |
-                    | (Validates JWT)         | (Sync HTTP)    |                       |
-                    +-------------------------+----------------+                       |
-                                                               |                       |
-                                               +---------------+-----------------------+
-                                               |             Async Events (RabbitMQ)
-                                               v
-                                      +-----------------+             +---------------------+
-                                      |    RabbitMQ     |<----------->|    Notification     |
-                                      | (Topic Exchange)|             |       Service       |
-                                      +-----------------+             +----------+----------+
-                                               ^                                 |
-                                               |                                 v
-                                      +--------+--------+             +---------------------+
-                                      |  Consul Server  |             |       MongoDB       |
-                                      | Service Registry|             | (Notification Audit)|
-                                      +-----------------+             +---------------------+
+```mermaid
+flowchart TD
+    subgraph Clients["Clients & External Parties"]
+        User["Client / Browser / Postman"]
+        GoogleAuth["Google Identity (OAuth 2.0)"]
+        PaymobGateway["Paymob Payment Gateway"]
+    end
+
+    subgraph GatewayPerimeter["Perimeter Network (HTTPS :7107)"]
+        Gateway["YARP API Gateway<br/>/api/*"]
+    end
+
+    subgraph Discovery["Service Registry"]
+        Consul[("Consul Server (:8500)<br/>Health Checks & Registry")]
+    end
+
+    subgraph InternalServices["Private Microservices Network (HTTP)"]
+        AuthSvc["Authentication Service (:5008)<br/>Google OAuth & JWT Issuance"]
+        CatSvc["Catalog Service (:5041)<br/>Events & Seat Inventory"]
+        BookSvc["Booking Service (:5118)<br/>Booking Lifecycle Orchestrator"]
+        PaySvc["Payment Service (:5190)<br/>Intentions & Webhooks"]
+        NotifSvc["Notification Service (:5059)<br/>Event Consumer & Dispatcher"]
+    end
+
+    subgraph EventBus["Asynchronous Event Broker"]
+        RabbitMQ{{"RabbitMQ (:5672)<br/>Topic Exchanges & Delayed Scheduling"}}
+    end
+
+    subgraph Databases["Polyglot Storage"]
+        AuthDB[("SQL Server<br/>EventHiveAuth")]
+        CatDB[("SQL Server<br/>EventHiveCatalog")]
+        BookDB[("SQL Server<br/>EventHiveBooking")]
+        PayDB[("SQL Server<br/>EventHivePayment")]
+        NotifDB[("MongoDB (:27017)<br/>EventHiveNotification")]
+    end
+
+    %% External routing
+    User -->|"HTTPS Request"| Gateway
+    User -.->|"OAuth Sign-In"| GoogleAuth
+    GoogleAuth -.->|"OAuth Code"| Gateway
+
+    %% Discovery
+    InternalServices -.->|"Heartbeat & Registration"| Consul
+    Gateway -.->|"Poll Healthy Endpoints"| Consul
+
+    %% Gateway Routing
+    Gateway -->|"/api/authentication/*"| AuthSvc
+    Gateway -->|"/api/catalog/*"| CatSvc
+    Gateway -->|"/api/booking/*"| BookSvc
+    Gateway -->|"/api/payment/*"| PaySvc
+
+    %% Sync Inter-service with Circuit Breaker
+    BookSvc ==>|"Sync HTTP Reserve/Release<br/>(Polly Circuit Breaker)"| CatSvc
+
+    %% Async Messaging
+    BookSvc -->|"BookingCreated / BookingExpired"| RabbitMQ
+    RabbitMQ -->|"BookingCreated"| PaySvc
+    PaySvc -->|"Create Intention"| PaymobGateway
+    PaymobGateway -.->|"Webhook via ngrok"| PaySvc
+    PaySvc -->|"PaymentSucceeded / PaymentFailed"| RabbitMQ
+    RabbitMQ -->|"PaymentSucceeded / PaymentFailed"| BookSvc
+    RabbitMQ -->|"All Lifecycle Events"| NotifSvc
+    CatSvc -->|"EventCancelled"| RabbitMQ
+
+    %% Database links
+    AuthSvc --- AuthDB
+    CatSvc --- CatDB
+    BookSvc --- BookDB
+    PaySvc --- PayDB
+    NotifSvc --- NotifDB
 ```
 
 ### Core Architecture Highlights
@@ -134,6 +169,14 @@ Payment processing uses Paymob's Unified Checkout and Webhooks:
    - In the integration settings:
      - **Transaction Response Callback (Redirection URL):** Set to `https://mockpaymentpage.web.app` (our hosted payment completion page).
      - **Transaction Processed Callback (Webhook URL):** Set to your ngrok tunnel URL + `/webhook/payment` (e.g., `https://<ngrok-id>.ngrok-free.app/webhook/payment`). *You will update this URL when running ngrok in Step 3 of the launch flow.*
+
+> [!TIP]
+> **Paymob Test Card Credentials:**
+> - **Card number:** `5123456789012346`
+> - **Expiry date:** `01/2039` *(any future date)*
+> - **CVV:** `123`
+> - **Name on card:** `TEST ACCOUNT`
+> - **3DS OTP:** `1234` or `123456`
 
 ---
 
@@ -372,12 +415,22 @@ Import the included **`EventHive.postman_collection.json`** into Postman. All re
 ### 4. Complete Payment
 1. Fetch your booking payment details via `GET /api/payment/booking/{{booking_id}}`.
 2. Open the returned `checkoutUrl` in your browser.
-3. Enter Paymob test card credentials (available in Paymob documentation) and submit.
-4. Paymob processes the payment and redirects your browser to `https://mockpaymentpage.web.app/payment-result.html`.
-5. Simultaneously, Paymob posts a webhook to `https://<ngrok-id>.ngrok-free.app/webhook/payment`.
-6. `PaymentService` verifies the HMAC signature and publishes `PaymentSucceeded`.
-7. `BookingService` consumes `PaymentSucceeded` and transitions the booking to `Confirmed`.
-8. `NotificationService` consumes `PaymentSucceeded`, marks the notification as sent, and dispatches the confirmation email/log.
+3. Enter the standard **Paymob Test Card** credentials:
+
+   | Field | Test Value |
+   | :--- | :--- |
+   | **Card number** | `5123456789012346` |
+   | **Expiration date** | `01 / 2039` *(or any future date)* |
+   | **Security code (CVV)** | `123` |
+   | **Name on card** | `TEST ACCOUNT` |
+   | **3DS OTP (if prompted)**| `1234` or `123456` |
+
+4. Click **Pay**.
+5. Paymob processes the payment and redirects your browser to `https://mockpaymentpage.web.app/payment-result.html`.
+6. Simultaneously, Paymob posts a webhook to `https://<ngrok-id>.ngrok-free.app/webhook/payment`.
+7. `PaymentService` verifies the HMAC signature and publishes `PaymentSucceeded`.
+8. `BookingService` consumes `PaymentSucceeded` and transitions the booking to `Confirmed`.
+9. `NotificationService` consumes `PaymentSucceeded`, marks the notification as sent, and dispatches the confirmation email/log.
 
 ---
 
