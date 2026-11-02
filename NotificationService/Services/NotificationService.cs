@@ -204,7 +204,7 @@ namespace NotificationService.Services
 
                 if (!booking.IsSent)
                 {
-                    // Case 1: Pending booking was never confirmed -> atomically transition it to EventCancelled
+                    // Case 1: Pending booking was never confirmed: atomically transition it to EventCancelled
                     var updated = await _notificationRepository.MarkAsEventCancelledAsync(booking.Id, eventName, cancellationToken);
                     if (updated != null)
                     {
@@ -214,7 +214,7 @@ namespace NotificationService.Services
                 }
                 else if (booking.Type == "BookingConfirmed")
                 {
-                    // Case 2: Confirmed booking -> check if cancellation notification was already created for this booking (idempotency)
+                    // Case 2: Confirmed booking: check if cancellation notification was already created for this booking (idempotency)
                     var alreadyNotified = await _notificationRepository.ExistsByBookingIdAndTypeAsync(booking.BookingId, "EventCancelled", cancellationToken);
                     if (!alreadyNotified)
                     {

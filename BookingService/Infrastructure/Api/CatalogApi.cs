@@ -4,6 +4,7 @@ using EventHive.Shared.Common;
 using Microsoft.IdentityModel.Tokens;
 using Polly.CircuitBreaker;
 using Polly.Timeout;
+using System.Diagnostics.Eventing.Reader;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Http.Headers;
@@ -150,10 +151,10 @@ namespace BookingService.Infrastructure.Api
             lock (_tokenLock)
             {
                 if (_cachedServiceToken != null && DateTime.UtcNow < _tokenExpiresAt)
-+                {
+                {
                     return _cachedServiceToken;
                 }
-
+                
                 var secretKey = _configuration["JWT:SecretKey"];
                 var issuer = _configuration["JWT:Issuer"];
                 var audience = _configuration["JWT:Audience"];
