@@ -110,8 +110,8 @@ Authentication relies on Google OAuth 2.0 to issue internal JWTs:
 2. Create or select a project and go to **APIs & Services $\rightarrow$ Credentials**.
 3. Click **Create Credentials $\rightarrow$ OAuth client ID** (Application type: **Web application**).
 4. Under **Authorized redirect URIs**, add:
-   - `https://localhost:7107/api/authentication/google-response`
-   - `https://localhost:7158/api/authentication/google-response` *(for direct local testing)*
+   - `https://localhost:7107/api/authentication/signin-google`
+   - `https://localhost:7158/api/authentication/signin-google` *(for direct local testing)*
 5. Save your **Client ID** and **Client Secret**.
 
 ---
