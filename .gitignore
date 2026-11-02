@@ -39,8 +39,6 @@ bld/
 ## Environment / Config
 .env
 **/appsettings*.json
-docker-compose*.yml
-docker-compose*.yaml
 
 ## OS Files
 .DS_Store
@@ -70,9 +68,3 @@ npm-debug.log
 *.db
 *.sqlite
 *.sqlite3
-
-## Documentation (Temporarily ignored)
-*.md
-
-## RabbitMq 
-definitions.json

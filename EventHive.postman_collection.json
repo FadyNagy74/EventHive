@@ -1,0 +1,954 @@
+{
+  "info": {
+    "_postman_id": "0b7d47ea-1457-4c32-8fe8-d8a0e18ce240",
+    "name": "EventHive",
+    "description": "Complete API collection for the EventHive microservices platform.\n\nAll requests are routed through the API Gateway at https://localhost:7107.\n\n## Setup\n1. Run the Google OAuth2 login flow in your browser: https://localhost:7107/api/authentication/google-login\n2. Copy the `accessToken` from the response.\n3. Set the `access_token` collection variable to the copied token.\n4. All authenticated requests will automatically use it.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "40568631",
+    "_collection_link": "https://go.postman.co/collection/40568631-0b7d47ea-1457-4c32-8fe8-d8a0e18ce240?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Google Login (open in browser)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/authentication/google-login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "authentication",
+                "google-login"
+              ]
+            },
+            "description": "Initiates the Google OAuth2 login flow.\n\nThis URL must be opened in a browser — it redirects to Google's sign-in page. Postman cannot follow the OAuth redirect chain.\n\nTest account:\n- Email: fadynagytest@gmail.com\n- Password: fadynagytest@1\n\nAfter Google redirects back, copy the `accessToken` from the JSON response and paste it into the `access_token` collection variable."
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const json = pm.response.json();",
+                  "    pm.collectionVariables.set('access_token', json.accessToken);",
+                  "    pm.collectionVariables.set('refresh_token', json.refreshToken);",
+                  "    console.log('Tokens updated from refresh response.');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refresh_token}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/authentication/refresh-token",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "authentication",
+                "refresh-token"
+              ]
+            },
+            "description": "Exchange a refresh token for a new access token.\n\nRefresh tokens rotate — the submitted token is revoked and a brand-new token pair is returned.\n\nToken lifetime:\n- Access token: 30 minutes\n- Refresh token: 14 days\n\nThe test script automatically updates the `access_token` and `refresh_token` collection variables on success."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refreshToken\": \"<your-refresh-token>\"\n}"
+                },
+                "url": {
+                  "raw": ""
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"accessToken\": \"eyJhbGciOiJIUzI1NiIs...\",\n  \"accessTokenExpiresAt\": \"2026-10-07T15:00:00Z\",\n  \"refreshToken\": \"new-refresh-token...\",\n  \"userId\": \"a1b2c3d4-...\",\n  \"email\": \"fadynagytest@gmail.com\",\n  \"name\": \"Fady Nagy\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get My Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/authentication/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "authentication",
+                "me"
+              ]
+            },
+            "description": "Returns the profile of the currently authenticated user.\n\nRequires a valid Bearer JWT in the Authorization header."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/authentication/me",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "authentication",
+                    "me"
+                  ]
+                },
+                "description": "Returns the profile of the currently authenticated user.\n\nRequires a valid Bearer JWT in the Authorization header."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"id\": \"a1b2c3d4-...\",\n  \"email\": \"fadynagytest@gmail.com\",\n  \"name\": \"Fady Nagy\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Sign Out",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/authentication/sign-out",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "authentication",
+                "sign-out"
+              ]
+            },
+            "description": "Revokes the current user's refresh token.\n\nAfter calling this, the stored refresh token is invalidated. The access token will still work until it expires (30 minutes), but it cannot be refreshed.\n\nRequires a valid Bearer JWT."
+          },
+          "response": []
+        }
+      ],
+      "description": "Authentication Service endpoints — Google OAuth2 login, token refresh, profile, and sign-out."
+    },
+    {
+      "name": "Catalog — Public",
+      "item": [
+        {
+          "name": "List Published Events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/catalog/events?pageNumber=1&pageSize=20",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "catalog",
+                "events"
+              ],
+              "query": [
+                {
+                  "key": "pageNumber",
+                  "value": "1",
+                  "description": "Page number (1-based)"
+                },
+                {
+                  "key": "pageSize",
+                  "value": "20",
+                  "description": "Number of events per page (default: 20)"
+                }
+              ]
+            },
+            "description": "Returns a paginated list of all events with status = Published.\n\nDraft, Closed, and Cancelled events are not included.\n\nNo authentication required."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/catalog/events?pageNumber=1&pageSize=20",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "catalog",
+                    "events"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageNumber",
+                      "value": "1",
+                      "description": "Page number (1-based)"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "20",
+                      "description": "Number of events per page (default: 20)"
+                    }
+                  ]
+                },
+                "description": "Returns a paginated list of all events with status = Published.\n\nDraft, Closed, and Cancelled events are not included.\n\nNo authentication required."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"items\": [\n    {\n      \"name\": \"Tech Conference 2026\",\n      \"description\": \"Annual technology conference\",\n      \"date\": \"2026-11-15T09:00:00Z\",\n      \"venue\": \"Cairo Convention Center\",\n      \"price\": 250.00,\n      \"remainingSeats\": 150\n    }\n  ],\n  \"pageNumber\": 1,\n  \"pageSize\": 20,\n  \"totalCount\": 1,\n  \"totalPages\": 1\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Published Event by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/catalog/event/{{event_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "catalog",
+                "event",
+                "{{event_id}}"
+              ]
+            },
+            "description": "Returns the details of a single Published event by its GUID.\n\nReturns 404 if the event does not exist or is not in Published status.\n\nNo authentication required."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/catalog/event/{{event_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "catalog",
+                    "event",
+                    "{{event_id}}"
+                  ]
+                },
+                "description": "Returns the details of a single Published event by its GUID.\n\nReturns 404 if the event does not exist or is not in Published status.\n\nNo authentication required."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"name\": \"Tech Conference 2026\",\n  \"description\": \"Annual technology conference\",\n  \"date\": \"2026-11-15T09:00:00Z\",\n  \"venue\": \"Cairo Convention Center\",\n  \"price\": 250.00,\n  \"remainingSeats\": 150\n}"
+            },
+            {
+              "name": "Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/catalog/event/{{event_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "catalog",
+                    "event",
+                    "{{event_id}}"
+                  ]
+                },
+                "description": "Returns the details of a single Published event by its GUID.\n\nReturns 404 if the event does not exist or is not in Published status.\n\nNo authentication required."
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"isSuccess\": false,\n  \"errors\": [\n    { \"code\": \"NotFound\", \"message\": \"Event not found or not published.\" }\n  ]\n}"
+            }
+          ]
+        }
+      ],
+      "description": "Public catalog endpoints — no authentication required."
+    },
+    {
+      "name": "Catalog — Admin",
+      "item": [
+        {
+          "name": "Create Event",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Tech Conference 2026\",\n  \"description\": \"Annual technology conference bringing together industry leaders.\",\n  \"date\": \"2026-11-15T09:00:00Z\",\n  \"venue\": \"Cairo Convention Center\",\n  \"price\": 250.00,\n  \"totalCapacity\": 200,\n  \"remainingSeats\": 200\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/catalog/event",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "catalog",
+                "event"
+              ]
+            },
+            "description": "Creates a new event with status = Draft.\n\nValidation rules:\n- name: required, minimum 3 characters\n- description: required\n- date: required\n- venue: required\n- price: required, must be >= 0\n- totalCapacity: required, must be >= 1\n- remainingSeats: required, must be >= 0\n\nReturns the new event's GUID on success.\n\nRequires Admin role."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Tech Conference 2026\",\n  \"description\": \"Annual technology conference bringing together industry leaders.\",\n  \"date\": \"2026-11-15T09:00:00Z\",\n  \"venue\": \"Cairo Convention Center\",\n  \"price\": 250.00,\n  \"totalCapacity\": 200,\n  \"remainingSeats\": 200\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/catalog/event",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "catalog",
+                    "event"
+                  ]
+                },
+                "description": "Creates a new event with status = Draft.\n\nValidation rules:\n- name: required, minimum 3 characters\n- description: required\n- date: required\n- venue: required\n- price: required, must be >= 0\n- totalCapacity: required, must be >= 1\n- remainingSeats: required, must be >= 0\n\nReturns the new event's GUID on success.\n\nRequires Admin role."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "\"3fa85f64-5717-4562-b3fc-2c963f66afa6\""
+            },
+            {
+              "name": "Validation Error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Tech Conference 2026\",\n  \"description\": \"Annual technology conference bringing together industry leaders.\",\n  \"date\": \"2026-11-15T09:00:00Z\",\n  \"venue\": \"Cairo Convention Center\",\n  \"price\": 250.00,\n  \"totalCapacity\": 200,\n  \"remainingSeats\": 200\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/catalog/event",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "catalog",
+                    "event"
+                  ]
+                },
+                "description": "Creates a new event with status = Draft.\n\nValidation rules:\n- name: required, minimum 3 characters\n- description: required\n- date: required\n- venue: required\n- price: required, must be >= 0\n- totalCapacity: required, must be >= 1\n- remainingSeats: required, must be >= 0\n\nReturns the new event's GUID on success.\n\nRequires Admin role."
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"isSuccess\": false,\n  \"errors\": [\n    { \"code\": \"Validation\", \"message\": \"The event name is required.\" }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Event",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Tech Conference 2026 (Updated)\",\n  \"description\": \"Updated description for the annual tech conference.\",\n  \"date\": \"2026-11-16T09:00:00Z\",\n  \"venue\": \"Cairo Convention Center, Hall A\",\n  \"price\": 300.00,\n  \"totalCapacity\": 250\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/catalog/event/{{event_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "catalog",
+                "event",
+                "{{event_id}}"
+              ]
+            },
+            "description": "Updates the details of an existing event.\n\nNote: `totalCapacity` can be increased at any time, but cannot be decreased below the already-reserved/sold seat count.\n\nRequires Admin role."
+          },
+          "response": []
+        },
+        {
+          "name": "Publish Event",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/catalog/event/publish/{{event_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "catalog",
+                "event",
+                "publish",
+                "{{event_id}}"
+              ]
+            },
+            "description": "Transitions an event from Draft -> Published status.\n\nOnly Published events appear in the public listing (GET /api/catalog/events).\n\nRequires Admin role."
+          },
+          "response": []
+        },
+        {
+          "name": "Close Event",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/catalog/event/close/{{event_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "catalog",
+                "event",
+                "close",
+                "{{event_id}}"
+              ]
+            },
+            "description": "Transitions a Published event to Closed status.\n\nBlocks new bookings. Existing confirmed bookings are unaffected. The event can still be fetched by ID.\n\nRequires Admin role."
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Event",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/catalog/event/cancel/{{event_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "catalog",
+                "event",
+                "cancel",
+                "{{event_id}}"
+              ]
+            },
+            "description": "Cancels an event, transitioning it to the Cancelled status.\n\nWhen fully implemented, this will publish an EventCancelled message that triggers Booking to cancel associated bookings and Notification to inform affected users.\n\nRequires Admin role."
+          },
+          "response": []
+        },
+        {
+          "name": "Adjust Remaining Seats",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"remainingSeats\": 180,\n  \"reason\": \"Reserved 20 seats for VIP guests\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/catalog/event/adjust-remaining-seats/{{event_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "catalog",
+                "event",
+                "adjust-remaining-seats",
+                "{{event_id}}"
+              ]
+            },
+            "description": "Manually adjusts the remaining seat count for an event.\n\nEvery adjustment is written to the ManualCapacityAdjustments audit log with the admin's user ID, name, and the reason provided.\n\nConstraints:\n- remainingSeats: required, must be >= 0\n- reason: required, minimum 5 characters\n\nRequires Admin role."
+          },
+          "response": []
+        }
+      ],
+      "description": "Admin-only catalog management endpoints.\n\nAll requests in this folder require a JWT with the Admin role.\nAssign the Admin role in the EventHiveAuth database, then re-login to get a new token that includes the role claim."
+    },
+    {
+      "name": "Booking",
+      "item": [
+        {
+          "name": "Create Booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"EventName\": \"Tech Conference 2026 (Updated)\",\r\n    \"EventId\": \"8CE07389-D7DD-448F-9CF6-E5B03E2AFBB6\",\r\n    \"Quantity\": 4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/booking",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "booking"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Booking by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/booking/F9D07DD2-FB4E-4F6A-B8F5-A9999C32FB9B",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "booking",
+                "F9D07DD2-FB4E-4F6A-B8F5-A9999C32FB9B"
+              ],
+              "query": [
+                {
+                  "key": "bookingid",
+                  "value": "F9D07DD2-FB4E-4F6A-B8F5-A9999C32FB9B",
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Bookings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://localhost:7107/api/booking/?pageNumber=1&pageSize=20",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7107",
+              "path": [
+                "api",
+                "booking",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "pageNumber",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "pageSize",
+                  "value": "20",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Booking",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/booking/1295C484-6643-4832-9C8D-68D3D53E7559/cancel",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "booking",
+                "1295C484-6643-4832-9C8D-68D3D53E7559",
+                "cancel"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Booking Service endpoints.\n\nNote: The Booking Service is currently a stub. Full booking functionality (BOK-01 through BOK-07) is under development."
+    },
+    {
+      "name": "Health Checks",
+      "item": [
+        {
+          "name": "Auth Service Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5008/health",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5008",
+              "path": [
+                "health"
+              ]
+            },
+            "description": "Health check for AuthenticationService. Returns 200 OK if the service is healthy. This is the endpoint polled by Consul every 10 seconds."
+          },
+          "response": []
+        },
+        {
+          "name": "Catalog Service Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5041/health",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5041",
+              "path": [
+                "health"
+              ]
+            },
+            "description": "Health check for CatalogService. Returns 200 OK if the service is healthy."
+          },
+          "response": []
+        },
+        {
+          "name": "Booking Service Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5118/health",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5118",
+              "path": [
+                "health"
+              ]
+            },
+            "description": "Health check for BookingService. Returns 200 OK if the service is healthy."
+          },
+          "response": []
+        },
+        {
+          "name": "Payment Service Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5190/health",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5190",
+              "path": [
+                "health"
+              ]
+            },
+            "description": "Health check for PaymentService. Returns 200 OK if the service is healthy."
+          },
+          "response": []
+        },
+        {
+          "name": "Notification Service Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5059/health",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5059",
+              "path": [
+                "health"
+              ]
+            },
+            "description": "Health check for NotificationService. Returns 200 OK if the service is healthy."
+          },
+          "response": []
+        }
+      ],
+      "description": "Health check endpoints for each microservice. These bypass the API Gateway and hit services directly."
+    },
+    {
+      "name": "Payment",
+      "item": [
+        {
+          "name": "Get Payment by Booking Id",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Notification",
+      "item": [
+        {
+          "name": "Get My Notifications",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Get Notification by Id",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://localhost:7107",
+      "description": "API Gateway base URL"
+    },
+    {
+      "key": "access_token",
+      "value": "",
+      "description": "JWT access token obtained from the Google OAuth2 login flow. Paste the accessToken value here."
+    },
+    {
+      "key": "refresh_token",
+      "value": "",
+      "description": "Refresh token obtained from the Google OAuth2 login flow."
+    },
+    {
+      "key": "event_id",
+      "value": "00000000-0000-0000-0000-000000000000",
+      "description": "GUID of a specific event — replace with a real event ID after creating one."
+    }
+  ]
+}

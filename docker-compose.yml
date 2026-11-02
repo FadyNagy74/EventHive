@@ -1,0 +1,29 @@
+services:
+  consul:
+    image: hashicorp/consul:latest
+    container_name: consul-server
+    restart: always
+    ports:
+      - "8500:8500" # The HTTP API and Web UI
+      - "8600:8600/udp" 
+    command: "agent -dev -ui -node=consul-dev -client=0.0.0.0"
+  
+  rabbitmq:
+    build:
+      context: .
+      dockerfile: Dockerfile.rabbitmq
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"   
+      - "15672:15672" # Management UI
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

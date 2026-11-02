@@ -1,0 +1,86 @@
+{
+  "rabbit_version": "4.2.0",
+  "rabbitmq_version": "4.2.0",
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+  "users": [
+    {
+      "name": "catalog_service",
+      "password_hash": "i5iLKRcuATq1LzcdN+2MhwsCWmOmYnYXE++LtfYu+T95nUBy",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "booking_service",
+      "password_hash": "B+XMwXtiao+kHHSeOx6CYC3ODscs0O0bLpfPgY1EyPdqtPDd",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "payment_service",
+      "password_hash": "E1KcSyMgrKl/vyTNNGtFaJeW8hAI4RQTm38Z/3+TTQOdzFrr",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "notification_service",
+      "password_hash": "WRPnoFarcoNwMrn9vrqtDiVHI7Te/REIBW6s4B0vqUpnPghZ",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "guest",
+      "password_hash": "TGsz/1sm3VA3diQUg+MhOQVYa9Zt9aKHROaP+krmuSlcyzQ/",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": [
+        "administrator"
+      ]
+    }
+  ],
+  "permissions": [
+    {
+      "user": "catalog_service",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "booking_service",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "payment_service",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "notification_service",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "guest",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "topic_permissions": [],
+  "parameters": [],
+  "policies": [],
+  "exchanges": [],
+  "queues": [],
+  "bindings": []
+}
